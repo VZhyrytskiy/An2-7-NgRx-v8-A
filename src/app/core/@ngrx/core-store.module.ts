@@ -8,14 +8,17 @@ import { StoreModule } from '@ngrx/store';
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forRoot({}, {
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true,
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictStateSerializability: true,
+          strictActionSerializability: true
+        }
       }
-    }),
+    )
   ]
 })
-export class CoreStoreModule { }
+export class CoreStoreModule {}
