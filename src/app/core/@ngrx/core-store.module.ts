@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
+import { metaReducers } from './meta-reducers';
 
 @NgModule({
   declarations: [],
@@ -11,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
     StoreModule.forRoot(
       {},
       {
+        metaReducers,
         runtimeChecks: {
           strictStateImmutability: true,
           strictActionImmutability: true,
