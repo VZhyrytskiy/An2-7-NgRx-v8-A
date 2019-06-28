@@ -3,7 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
 
-const tasksReducer = createReducer(
+const reducer = createReducer(
   initialTasksState,
   on(TasksActions.getTasks, state => {
     console.log('GET_TASKS action being handled!');
@@ -27,6 +27,6 @@ const tasksReducer = createReducer(
   })
 );
 
-export function reducer(state: TasksState | undefined, action: Action) {
-  return tasksReducer(state, action);
+export function tasksReducer(state: TasksState | undefined, action: Action) {
+  return reducer(state, action);
 }

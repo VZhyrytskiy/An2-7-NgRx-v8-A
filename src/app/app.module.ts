@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout.module';
 import { TasksModule } from './tasks/tasks.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SpinnerModule } from './widgets/spinner/spinner.module';
+import { CoreStoreModule } from './core/@ngrx/core-store.module';
 
 import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './core/interceptors';
@@ -23,6 +24,7 @@ import { httpInterceptorProviders } from './core/interceptors';
     FormsModule,
     HttpClientModule,
     LayoutModule,
+    CoreStoreModule,
     TasksModule,
     SpinnerModule.forRoot(),
     AppRoutingModule
