@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 // @Ngrx
 import { Store, select } from '@ngrx/store';
 import { AppState, TasksState } from './../../../core/@ngrx';
+import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
@@ -36,7 +37,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onCompleteTask(task: TaskModel): void {
-    this.updateTask(task).catch(err => console.log(err));
+    this.store.dispatch(TasksActions.doneTask(task));
   }
 
   onEditTask(task: TaskModel): void {
@@ -49,16 +50,5 @@ export class TaskListComponent implements OnInit {
       .deleteTask(task)
       .then(() => (this.tasks = this.taskPromiseService.getTasks()))
       .catch(err => console.log(err));
-  }
-
-  private async updateTask(task: TaskModel) {
-    const updatedTask = await this.taskPromiseService.updateTask({
-      ...task,
-      done: true
-    });
-
-    const tasks: TaskModel[] = await this.tasks;
-    const index = tasks.findIndex(t => t.id === updatedTask.id);
-    tasks[index] = { ...updatedTask };
   }
 }

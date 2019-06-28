@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
+import { TaskModel } from 'src/app/tasks/models/task.model';
 
 const reducer = createReducer(
   initialTasksState,
@@ -24,6 +25,23 @@ const reducer = createReducer(
   on(TasksActions.deleteTask, state => {
     console.log('DELETE_TASK action being handled!');
     return { ...state };
+  }),
+  on(TasksActions.doneTask, (state, task) => {
+    console.log('DONE_TASK action being handled!');
+
+    const id = (task as TaskModel).id;
+    const data = state.data.map(task => {
+      if (task.id === id) {
+        return { ...task, done: true };
+      }
+
+      return task;
+    });
+
+    return {
+      ...state,
+      data
+    };
   })
 );
 
