@@ -29,9 +29,9 @@ const reducer = createReducer(
   on(TasksActions.doneTask, (state, task) => {
     console.log('DONE_TASK action being handled!');
 
-    const id = (task as TaskModel).id;
-    const data = state.data.map(task => {
-      if (task.id === id) {
+    const id = task.id;
+    const data = state.data.map(t => {
+      if (t.id === id) {
         return { ...task, done: true };
       }
 
