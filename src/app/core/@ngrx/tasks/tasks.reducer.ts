@@ -8,7 +8,30 @@ const reducer = createReducer(
   initialTasksState,
   on(TasksActions.getTasks, state => {
     console.log('GET_TASKS action being handled!');
-    return { ...state };
+    return {
+      ...state,
+      loading: true
+    };
+  }),
+  on(TasksActions.getTasksSuccess, (state, props) => {
+    console.log('GET_TASKS_SUCCESS action being handled!');
+    const data = [...props.tasks];
+    return {
+      ...state,
+      data,
+      loading: false,
+      loaded: true
+    };
+  }),
+  on(TasksActions.getTasksError, (state, props) => {
+    console.log('GET_TASKS_ERROR action being handled!');
+    const error = props.error;
+    return {
+      ...state,
+      loading: false,
+      loaded: false,
+      error
+    };
   }),
   on(TasksActions.getTask, state => {
     console.log('GET_TASK action being handled!');

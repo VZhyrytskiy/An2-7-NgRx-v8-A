@@ -3,6 +3,14 @@ import { createAction, props } from '@ngrx/store';
 import { TaskModel } from './../../../tasks/models/task.model';
 
 export const getTasks = createAction('[Tasks] GET_TASKS');
+export const getTasksSuccess = createAction(
+  '[Tasks] GET_TASKS_SUCCEESS',
+  props<{ tasks: TaskModel[] }>()
+);
+export const getTasksError = createAction(
+  '[Tasks] GET_TASKS_ERROR',
+  props<{ error: Error | string }>()
+);
 
 export const getTask = createAction(
   '[Tasks] GET_TASK',
