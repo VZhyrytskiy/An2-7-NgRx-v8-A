@@ -5,8 +5,7 @@ import { CommonModule } from '@angular/common';
 // @NgRx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { tasksReducer } from './../core/@ngrx';
-import { TasksEffects } from '../core/@ngrx/tasks/tasks.effects';
+import { TasksEffects, tasksReducer } from './../core/@ngrx';
 
 import { TasksRoutingModule } from './tasks-routing.module';
 import { TaskComponent, TaskFormComponent, TaskListComponent } from './components';
