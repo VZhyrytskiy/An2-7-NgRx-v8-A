@@ -5,7 +5,7 @@ import { TaskModel } from './../../../tasks/models/task.model';
 export const getTasks = createAction('[Tasks] GET_TASKS');
 export const getTasksSuccess = createAction(
   '[Tasks] GET_TASKS_SUCCEESS',
-  props<TaskModel[]>()
+  props<{ tasks: TaskModel[] }>()
 );
 export const getTasksError = createAction(
   '[Tasks] GET_TASKS_ERROR',
