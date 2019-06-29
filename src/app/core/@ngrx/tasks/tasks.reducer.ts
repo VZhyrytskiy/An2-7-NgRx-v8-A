@@ -13,9 +13,9 @@ const reducer = createReducer(
       loading: true
     };
   }),
-  on(TasksActions.getTasksSuccess, (state, props) => {
+  on(TasksActions.getTasksSuccess, (state, tasks) => {
     console.log('GET_TASKS_SUCCESS action being handled!');
-    const data = [...props.tasks];
+    const data = [...tasks];
     return {
       ...state,
       data,
