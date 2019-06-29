@@ -11,15 +11,15 @@ export const getTask = createAction(
 
 export const createTask = createAction(
   '[Tasks] CREATE_TASK',
-  props<TaskModel>()
+  props<{ task: TaskModel }>()
 );
 
 export const updateTask = createAction(
   '[Tasks] UPDATE_TASK',
-  props<TaskModel>()
+  props<{ task: TaskModel }>()
 );
 
 export const deleteTask = createAction(
   '[Tasks] DELETE_TASK',
-  props<TaskModel>()
+  props<{ task: TaskModel }>()
 );
