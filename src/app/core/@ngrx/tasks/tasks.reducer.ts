@@ -77,7 +77,9 @@ const reducer = createReducer(
     const data = [...state.data];
     const index = data.findIndex(t => t.id === task.id);
 
-    data[index] = { ...task };
+    const { type: deleted, ...taskToUpdate } = { ...task };
+    data[index] = taskToUpdate;
+
 
     return {
       ...state,
