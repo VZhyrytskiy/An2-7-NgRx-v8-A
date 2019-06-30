@@ -12,20 +12,6 @@ export const getTasksError = createAction(
   props<{ error: Error | string }>()
 );
 
-export const getTask = createAction(
-  '[Tasks] GET_TASK',
-  props<{ taskID: number }>()
-);
-
-export const getTaskSuccess = createAction(
-  '[Tasks] GET_TASK_SUCCESS',
-  props<TaskModel>()
-);
-
-export const getTaskError = createAction(
-  '[Tasks] GET_TASK_ERROR',
-  props<{ error: Error | string }>()
-);
 
 export const createTask = createAction(
   '[Tasks] CREATE_TASK',
