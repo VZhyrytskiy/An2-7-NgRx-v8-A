@@ -20,7 +20,8 @@ const reducer = createReducer(
       ...state,
       data,
       loading: false,
-      loaded: true
+      loaded: true,
+      selectedTask: null
     };
   }),
   on(TasksActions.getTasksError, (state, props) => {
@@ -67,6 +68,27 @@ const reducer = createReducer(
     console.log('CREATE_TASK action being handled!');
     return { ...state };
   }),
+
+  on(TasksActions.createTaskSuccess, (state, task) => {
+    console.log('CREATE_TASK_SUCCESS action being handled!');
+    const { type: deleted, ...taskToCreate } = { ...task };
+    const data = [...state.data, taskToCreate];
+
+    return {
+      ...state,
+      data
+    };
+  }),
+
+  on(TasksActions.createTaskError, (state, props) => {
+    console.log('CREATE_TASK_ERROR action being handled!');
+    const error = props.error;
+    return {
+      ...state,
+      error
+    };
+  }),
+
   on(TasksActions.updateTask, state => {
     console.log('UPDATE_TASK action being handled!');
     return { ...state };
@@ -77,7 +99,8 @@ const reducer = createReducer(
     const data = [...state.data];
     const index = data.findIndex(t => t.id === task.id);
 
-    data[index] = { ...task };
+    const { type: deleted, ...taskToUpdate } = { ...task };
+    data[index] = taskToUpdate;
 
     return {
       ...state,

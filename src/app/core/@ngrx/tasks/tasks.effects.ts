@@ -66,4 +66,23 @@ export class TasksEffects {
       )
     )
   );
+
+  createTask$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TasksActions.createTask),
+      map(action => {
+        const { type: deleted, ...task } = { ...action };
+        return task;
+      }),
+      concatMap((task: TaskModel) =>
+        this.taskPromiseService
+          .createTask(task)
+          .then(createdTask => {
+            this.router.navigate(['/home']);
+            return TasksActions.createTaskSuccess(createdTask);
+          })
+          .catch(error => TasksActions.createTaskError({ error }))
+      )
+    )
+  );
 }

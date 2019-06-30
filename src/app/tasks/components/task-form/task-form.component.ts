@@ -30,12 +30,14 @@ export class TaskFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.task = new TaskModel();
-
     this.tasksState$ = this.store.pipe(select('tasks'));
-    this.sub = this.tasksState$.subscribe(
-      tasksState => (this.task = {...tasksState.selectedTask})
-    );
+    this.sub = this.tasksState$.subscribe(tasksState => {
+      if (tasksState.selectedTask) {
+        this.task = { ...tasksState.selectedTask };
+      } else {
+        this.task = new TaskModel();
+      }
+    });
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('taskID');
@@ -53,7 +55,6 @@ export class TaskFormComponent implements OnInit {
     } else {
       this.store.dispatch(TasksActions.createTask(task));
     }
-
   }
 
   onGoBack(): void {
