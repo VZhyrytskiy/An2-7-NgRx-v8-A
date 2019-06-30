@@ -3,18 +3,32 @@ import { Router } from '@angular/router';
 
 // @NgRx
 import { Action } from '@ngrx/store';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import {
+  Actions,
+  createEffect,
+  ofType,
+  OnInitEffects,
+  OnRunEffects,
+  EffectNotification
+} from '@ngrx/effects';
 import * as TasksActions from './tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { concatMap, pluck, switchMap, map } from 'rxjs/operators';
+import {
+  concatMap,
+  pluck,
+  switchMap,
+  map,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { TaskModel } from '../../../tasks/models/task.model';
 
 @Injectable()
-export class TasksEffects {
+export class TasksEffects implements OnInitEffects, OnRunEffects {
   constructor(
     private actions$: Actions,
     private router: Router,
@@ -105,4 +119,23 @@ export class TasksEffects {
       )
     )
   );
+
+  // Implement this interface to dispatch a custom action after the effect has been added.
+  // You can listen to this action in the rest of the application
+  // to execute something after the effect is registered.
+  ngrxOnInitEffects(): Action {
+    console.log('ngrxOnInitEffects is called');
+    return { type: '[TasksEffects]: Init' };
+  }
+
+  // Implement the OnRunEffects interface to control the lifecycle
+  // of the resolved effects.
+  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
+    return resolvedEffects$.pipe(
+      tap(val => console.log('ngrxOnRunEffects:', val)),
+      // perform until create new task
+      // only for demo purpose
+      takeUntil(this.actions$.pipe(ofType(TasksActions.createTask)))
+    );
+  }
 }
