@@ -33,7 +33,8 @@ export class TaskListComponent implements OnInit {
   }
 
   onCompleteTask(task: TaskModel): void {
-    this.store.dispatch(TasksActions.doneTask(task));
+    const doneTask = {...task, done: true};
+    this.store.dispatch(TasksActions.updateTask(doneTask));
   }
 
   onEditTask(task: TaskModel): void {

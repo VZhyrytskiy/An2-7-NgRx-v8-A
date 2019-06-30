@@ -71,5 +71,3 @@ export const deleteTaskError = createAction(
   '[Tasks] DELETE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
-
-export const doneTask = createAction('[Tasks] DONE_TASK', props<TaskModel>());

@@ -139,24 +139,6 @@ const reducer = createReducer(
       ...state,
       error
     };
-  }),
-
-  on(TasksActions.doneTask, (state, task) => {
-    console.log('DONE_TASK action being handled!');
-
-    const id = task.id;
-    const data = state.data.map(t => {
-      if (t.id === id) {
-        return { ...task, done: true };
-      }
-
-      return task;
-    });
-
-    return {
-      ...state,
-      data
-    };
   })
 );
 
