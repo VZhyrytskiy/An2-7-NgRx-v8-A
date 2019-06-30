@@ -121,6 +121,26 @@ const reducer = createReducer(
     console.log('DELETE_TASK action being handled!');
     return { ...state };
   }),
+
+  on(TasksActions.deleteTaskSuccess, (state, task) => {
+    console.log('DELETE_TASK_SUCCESS action being handled!');
+    const data = state.data.filter(t => t.id !== task.id);
+
+    return {
+      ...state,
+      data
+    };
+  }),
+
+  on(TasksActions.deleteTaskError, (state, props) => {
+    console.log('DELETE_TASK_ERROR action being handled!');
+    const error = props.error;
+    return {
+      ...state,
+      error
+    };
+  }),
+
   on(TasksActions.doneTask, (state, task) => {
     console.log('DONE_TASK action being handled!');
 

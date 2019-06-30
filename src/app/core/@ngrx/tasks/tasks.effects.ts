@@ -85,4 +85,24 @@ export class TasksEffects {
       )
     )
   );
+
+  deleteTask$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TasksActions.deleteTask),
+      map(action => {
+        const { type: deleted, ...task } = { ...action };
+        return task;
+      }),
+      concatMap((task: TaskModel) =>
+        this.taskPromiseService
+          .deleteTask(task)
+          .then(
+            (/* method delete for this API returns nothing, so we will use previous task */) => {
+              return TasksActions.deleteTaskSuccess(task);
+            }
+          )
+          .catch(error => TasksActions.deleteTaskError({ error }))
+      )
+    )
+  );
 }
