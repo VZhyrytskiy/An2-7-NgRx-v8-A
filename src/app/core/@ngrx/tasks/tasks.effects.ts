@@ -7,7 +7,7 @@ import * as TasksActions from './tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 
@@ -27,6 +27,19 @@ export class TasksEffects {
         this.taskPromiseService
           .getTasks()
           .then(tasks => TasksActions.getTasksSuccess({ tasks }))
+          .catch(error => TasksActions.getTasksError({ error }))
+      )
+    )
+  );
+
+  getTask$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TasksActions.getTask),
+      pluck('taskID'),
+      switchMap(taskID =>
+        this.taskPromiseService
+          .getTask(taskID)
+          .then(task => TasksActions.getTaskSuccess(task))
           .catch(error => TasksActions.getTasksError({ error }))
       )
     )

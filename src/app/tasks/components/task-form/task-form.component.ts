@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
+// @NgRx
+import { Store, select } from '@ngrx/store';
+import { AppState, TasksState } from './../../../core/@ngrx';
+import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
+
 // rxjs
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { AutoUnsubscribe } from './../../../core';
 
 import { TaskModel } from './../../models/task.model';
 import { TaskPromiseService } from './../../services';
@@ -11,31 +17,34 @@ import { TaskPromiseService } from './../../services';
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
+@AutoUnsubscribe()
 export class TaskFormComponent implements OnInit {
   task: TaskModel;
+  tasksState$: Observable<TasksState>;
+
+  private sub: Subscription;
 
   constructor(
     private taskPromiseService: TaskPromiseService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
     this.task = new TaskModel();
 
-    this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          return params.get('taskID')
-            ? this.taskPromiseService.getTask(+params.get('taskID'))
-            : Promise.resolve(null);
-        })
-      )
-      .subscribe(
-        // when Promise.resolve(null) => task = null => {...null} => {}
-        task => (this.task = { ...task }),
-        err => console.log(err)
-      );
+    this.tasksState$ = this.store.pipe(select('tasks'));
+    this.sub = this.tasksState$.subscribe(
+      tasksState => (this.task = tasksState.selectedTask)
+    );
+
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('taskID');
+      if (id) {
+        this.store.dispatch(TasksActions.getTask({ taskID: +id }));
+      }
+    });
   }
 
   onSaveTask() {

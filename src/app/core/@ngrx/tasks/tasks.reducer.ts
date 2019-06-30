@@ -15,7 +15,6 @@ const reducer = createReducer(
   }),
   on(TasksActions.getTasksSuccess, (state, props) => {
     console.log('GET_TASKS_SUCCESS action being handled!');
-    console.log(props);
     const data = [...props.tasks];
     return {
       ...state,
@@ -36,8 +35,34 @@ const reducer = createReducer(
   }),
   on(TasksActions.getTask, state => {
     console.log('GET_TASK action being handled!');
-    return { ...state };
+    return {
+      ...state,
+      loading: true,
+      loaded: false
+    };
   }),
+  on(TasksActions.getTaskSuccess, (state, task) => {
+    console.log('GET_TASK action being handled!');
+    // remove property type
+    const { type: deleted, ...selectedTask } = { ...task };
+    return {
+      ...state,
+      loading: false,
+      loaded: true,
+      selectedTask
+    };
+  }),
+  on(TasksActions.getTaskError, (state, props) => {
+    console.log('GET_TASK_ERROR action being handled!');
+    const error = props.error;
+    return {
+      ...state,
+      loading: false,
+      loaded: false,
+      error
+    };
+  }),
+
   on(TasksActions.createTask, state => {
     console.log('CREATE_TASK action being handled!');
     return { ...state };
