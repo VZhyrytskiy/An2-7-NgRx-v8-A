@@ -11,7 +11,6 @@ import { Observable, Subscription } from 'rxjs';
 import { AutoUnsubscribe } from './../../../core';
 
 import { TaskModel } from './../../models/task.model';
-import { TaskPromiseService } from './../../services';
 
 @Component({
   templateUrl: './task-form.component.html',
@@ -25,7 +24,6 @@ export class TaskFormComponent implements OnInit {
   private sub: Subscription;
 
   constructor(
-    private taskPromiseService: TaskPromiseService,
     private router: Router,
     private route: ActivatedRoute,
     private store: Store<AppState>
@@ -36,7 +34,7 @@ export class TaskFormComponent implements OnInit {
 
     this.tasksState$ = this.store.pipe(select('tasks'));
     this.sub = this.tasksState$.subscribe(
-      tasksState => (this.task = tasksState.selectedTask)
+      tasksState => (this.task = {...tasksState.selectedTask})
     );
 
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -50,10 +48,12 @@ export class TaskFormComponent implements OnInit {
   onSaveTask() {
     const task = { ...this.task };
 
-    const method = task.id ? 'updateTask' : 'createTask';
-    this.taskPromiseService[method](task)
-      .then(() => this.onGoBack())
-      .catch(err => console.log(err));
+    if (task.id) {
+      this.store.dispatch(TasksActions.updateTask(task));
+    } else {
+      this.store.dispatch(TasksActions.createTask(task));
+    }
+
   }
 
   onGoBack(): void {

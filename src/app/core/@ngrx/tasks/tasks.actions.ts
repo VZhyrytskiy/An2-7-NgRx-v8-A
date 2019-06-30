@@ -37,6 +37,16 @@ export const updateTask = createAction(
   props<TaskModel>()
 );
 
+export const updateTaskSuccess = createAction(
+  '[Tasks] UPDATE_TASK_SUCCESS',
+  props<TaskModel>()
+);
+
+export const updateTaskError = createAction(
+  '[Tasks] UPDATE_TASK_ERROR',
+  props<{ error: Error | string }>()
+);
+
 export const deleteTask = createAction(
   '[Tasks] DELETE_TASK',
   props<TaskModel>()
