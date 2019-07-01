@@ -14,7 +14,7 @@ import {
 
 // rxjs
 import { Subscription, merge } from 'rxjs';
-import { filter, map, switchMap, tap, mergeAll } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { MessagesService, CustomPreloadingStrategyService } from './core';
 import { SpinnerService } from './widgets';
