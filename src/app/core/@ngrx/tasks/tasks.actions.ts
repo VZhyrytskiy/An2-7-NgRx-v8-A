@@ -24,4 +24,7 @@ export const deleteTask = createAction(
   props<{ task: Task }>()
 );
 
-export const doneTask = createAction('[Tasks] DONE_TASK', props<TaskModel>());
+export const doneTask = createAction(
+  '[Tasks] DONE_TASK',
+  props<{ task: Task }>()
+);
