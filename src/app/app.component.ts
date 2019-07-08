@@ -11,6 +11,7 @@ import {
   selectRouteData,
   selectUrl
 } from './core/@ngrx';
+import * as RouterActions from './core/@ngrx/router/router.actions';
 
 // rxjs
 import { Subscription, merge } from 'rxjs';
@@ -43,7 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
     //   this.preloadingStrategy.preloadedModules
     // );
     // this.setPageTitles();
-
     // Router Selectors Demo
     // const url$ = this.store.pipe(select(selectUrl));
     // const queryParams$ = this.store.pipe(select(selectQueryParams));
@@ -58,7 +58,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onDisplayMessages(): void {
-    this.router.navigate([{ outlets: { messages: ['messages'] } }]);
+    this.store.dispatch(
+      RouterActions.go({
+        path: [{ outlets: { messages: ['messages'] } }]
+      })
+    );
+
     this.messagesService.isDisplayed = true;
   }
 

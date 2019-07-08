@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlTree } from '@angular/router';
-import { Location } from '@angular/common';
 
 // rxjs
 import { Observable, of } from 'rxjs';
@@ -10,6 +9,7 @@ import { pluck, switchMap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState, selectUsersOriginalUser } from './../../../core/@ngrx';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 import { DialogService, CanComponentDeactivate } from './../../../core';
 import { UserModel } from './../../models/user.model';
@@ -23,7 +23,6 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private dialogService: DialogService,
     private store: Store<AppState>
   ) {}
@@ -47,7 +46,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   onGoBack() {
-    this.location.back();
+    this.store.dispatch(RouterActions.back());
   }
 
   canDeactivate():

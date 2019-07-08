@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @NgRx
 import { Store, select } from '@ngrx/store';
 import { AppState, selectSelectedTaskByUrl } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 // rxjs
 import { Subscription } from 'rxjs';
@@ -22,7 +22,7 @@ export class TaskFormComponent implements OnInit {
 
   private sub: Subscription;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.sub = this.store
@@ -41,6 +41,10 @@ export class TaskFormComponent implements OnInit {
   }
 
   onGoBack(): void {
-    this.router.navigate(['/home']);
+    this.store.dispatch(
+      RouterActions.go({
+        path: ['/home']
+      })
+    );
   }
 }

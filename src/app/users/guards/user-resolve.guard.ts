@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve } from '@angular/router';
+import { Resolve } from '@angular/router';
 
 // rxjs
 import { Observable, of } from 'rxjs';
@@ -9,6 +9,7 @@ import { delay, map, catchError, finalize, tap, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState, selectSelectedUserByUrl } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
+import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
 import { UserModel } from './../models/user.model';
 import { UsersServicesModule } from '../users-services.module';
@@ -20,7 +21,6 @@ import { SpinnerService } from './../../widgets';
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
     private store: Store<AppState>,
-    private router: Router,
     private spinner: SpinnerService
   ) {}
 
@@ -36,13 +36,23 @@ export class UserResolveGuard implements Resolve<UserModel> {
         if (user) {
           return user;
         } else {
-          this.router.navigate(['/users']);
+          this.store.dispatch(
+            RouterActions.go({
+              path: ['/users']
+            })
+          );
+
           return null;
         }
       }),
       take(1),
       catchError(() => {
-        this.router.navigate(['/users']);
+        this.store.dispatch(
+          RouterActions.go({
+            path: ['/users']
+          })
+        );
+
         // catchError MUST return observable
         return of(null);
       }),

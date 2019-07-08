@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @NgRx
 import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as UsersActions from './users.actions';
+import * as RouterActions from './../router/router.actions';
 
 // Rxjs
 import { Observable, of } from 'rxjs';
@@ -17,8 +17,7 @@ import { UserModel } from '../../../users/models/user.model';
 export class UsersEffects {
   constructor(
     private actions$: Actions,
-    private userObservableService: UserObservableService,
-    private router: Router
+    private userObservableService: UserObservableService
   ) {
     console.log('[USERS EFFECTS]');
   }
@@ -45,7 +44,6 @@ export class UsersEffects {
       concatMap((user: UserModel) =>
         this.userObservableService.updateUser(user).pipe(
           map(updatedUser => {
-            this.router.navigate(['/users', { editedUserID: updatedUser.id }]);
             return UsersActions.updateUserSuccess(updatedUser);
           }),
           catchError(error => of(UsersActions.updateUserError({ error })))
@@ -64,7 +62,6 @@ export class UsersEffects {
       concatMap((user: UserModel) =>
         this.userObservableService.createUser(user).pipe(
           map(createdUser => {
-            this.router.navigate(['/users']);
             return UsersActions.createUserSuccess(createdUser);
           }),
           catchError(error => of(UsersActions.createUserError({ error })))
@@ -88,6 +85,25 @@ export class UsersEffects {
           catchError(error => of(UsersActions.deleteUserError({ error })))
         )
       )
+    )
+  );
+
+  createUpdateUserSuccess$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UsersActions.createUser, UsersActions.updateUser),
+      map(action => {
+        const userID = action.id;
+        const actionType = action.type;
+        let path: any[];
+
+        if (actionType === '[Users] UPDATE_USER') {
+          path = ['/users', { editedUserID: userID }];
+        } else {
+          path = ['/users'];
+        }
+
+        return RouterActions.go({ path });
+      })
     )
   );
 }

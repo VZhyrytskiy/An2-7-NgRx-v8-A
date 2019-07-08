@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @NgRx
 import { Store, select } from '@ngrx/store';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import {
   AppState,
   selectUsers,
@@ -29,30 +29,7 @@ export class UserListComponent implements OnInit {
   private subscription: Subscription;
   private editedUser: UserModel;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
-
-  // ngOnInit() {
-  //   this.users$ = this.userObservableService.getUsers();
-
-  //   // listen editedUserID from UserFormComponent
-  //   this.route.paramMap
-  //     .pipe(
-  //       switchMap((params: ParamMap) => {
-  //         return params.get('editedUserID')
-  //           ? this.userObservableService.getUser(+params.get('editedUserID'))
-  //           : of(null);
-  //       })
-  //     )
-  //     .subscribe(
-  //       (user: UserModel) => {
-  //         this.editedUser = { ...user };
-  //         console.log(
-  //           `Last time you edited user ${JSON.stringify(this.editedUser)}`
-  //         );
-  //       },
-  //       err => console.log(err)
-  //     );
-  // }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
     this.users$ = this.store.pipe(select(selectUsers));
@@ -73,10 +50,11 @@ export class UserListComponent implements OnInit {
 
   onEditUser(user: UserModel) {
     const link = ['/users/edit', user.id];
-    this.router.navigate(link);
-    // or
-    // const link = ['edit', user.id];
-    // this.router.navigate(link, {relativeTo: this.route});
+    this.store.dispatch(
+      RouterActions.go({
+        path: link
+      })
+    );
   }
 
   isEdited(user: UserModel): boolean {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 // @NgRx
 import { Action } from '@ngrx/store';
@@ -12,6 +11,7 @@ import {
   EffectNotification
 } from '@ngrx/effects';
 import * as TasksActions from './tasks.actions';
+import * as RouterActions from './../router/router.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
@@ -31,7 +31,6 @@ import { TaskModel } from '../../../tasks/models/task.model';
 export class TasksEffects implements OnInitEffects, OnRunEffects {
   constructor(
     private actions$: Actions,
-    private router: Router,
     private taskPromiseService: TaskPromiseService
   ) {
     console.log('[TASKS EFFECTS]');
@@ -49,8 +48,6 @@ export class TasksEffects implements OnInitEffects, OnRunEffects {
     )
   );
 
-  
-
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.updateTask),
@@ -62,7 +59,6 @@ export class TasksEffects implements OnInitEffects, OnRunEffects {
         this.taskPromiseService
           .updateTask(task)
           .then(updatedTask => {
-            this.router.navigate(['/home']);
             return TasksActions.updateTaskSuccess(updatedTask);
           })
           .catch(error => TasksActions.updateTaskError({ error }))
@@ -81,7 +77,6 @@ export class TasksEffects implements OnInitEffects, OnRunEffects {
         this.taskPromiseService
           .createTask(task)
           .then(createdTask => {
-            this.router.navigate(['/home']);
             return TasksActions.createTaskSuccess(createdTask);
           })
           .catch(error => TasksActions.createTaskError({ error }))
@@ -108,6 +103,17 @@ export class TasksEffects implements OnInitEffects, OnRunEffects {
       )
     )
   );
+
+  createUpdateTaskSuccess$: Observable<Action> = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TasksActions.createTaskSuccess, TasksActions.updateTaskSuccess),
+      map(action =>
+        RouterActions.go({
+          path: ['/home']
+        })
+      )
+    );
+  });
 
   // Implement this interface to dispatch a custom action after the effect has been added.
   // You can listen to this action in the rest of the application
