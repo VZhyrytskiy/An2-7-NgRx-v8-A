@@ -39,7 +39,7 @@ export class TasksEffects {
       switchMap(taskID =>
         this.taskPromiseService
           .getTask(taskID)
-          .then(task => TasksActions.getTaskSuccess(task))
+          .then(task => TasksActions.getTaskSuccess({ task }))
           .catch(error => TasksActions.getTasksError({ error }))
       )
     )

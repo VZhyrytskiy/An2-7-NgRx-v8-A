@@ -36,7 +36,7 @@ export class TaskFormComponent implements OnInit {
 
     this.tasksState$ = this.store.pipe(select('tasks'));
     this.sub = this.tasksState$.subscribe(
-      tasksState => (this.task = { ...tasksState.selectedTask })
+      tasksState => (this.task = { ...tasksState.selectedTask } as TaskModel)
     );
 
     this.route.paramMap.subscribe((params: ParamMap) => {

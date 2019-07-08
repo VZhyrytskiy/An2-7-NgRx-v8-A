@@ -2,7 +2,6 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
-import { TaskModel } from 'src/app/tasks/models/task.model';
 
 const reducer = createReducer(
   initialTasksState,
@@ -41,10 +40,10 @@ const reducer = createReducer(
       loaded: false
     };
   }),
-  on(TasksActions.getTaskSuccess, (state, task) => {
+  on(TasksActions.getTaskSuccess, (state, props) => {
     console.log('GET_TASK action being handled!');
-    // remove property type
-    const { type: deleted, ...selectedTask } = { ...task };
+
+    const selectedTask = { ...props.task };
     return {
       ...state,
       loading: false,
@@ -75,16 +74,16 @@ const reducer = createReducer(
     console.log('DELETE_TASK action being handled!');
     return { ...state };
   }),
-  on(TasksActions.doneTask, (state, task) => {
+  on(TasksActions.doneTask, (state, props) => {
     console.log('DONE_TASK action being handled!');
 
-    const id = task.id;
+    const id = props.task.id;
     const data = state.data.map(t => {
       if (t.id === id) {
-        return { ...task, done: true };
+        return { ...props.task, done: true };
       }
 
-      return task;
+      return props.task;
     });
 
     return {
