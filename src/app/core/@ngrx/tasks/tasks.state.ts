@@ -1,7 +1,7 @@
-import { TaskModel } from './../../../tasks/models/task.model';
+import { Task, TaskModel } from './../../../tasks/models/task.model';
 
 export interface TasksState {
-  data: ReadonlyArray<TaskModel>;
+  data: ReadonlyArray<Task>;
 }
 
 export const initialTasksState: TasksState = {
