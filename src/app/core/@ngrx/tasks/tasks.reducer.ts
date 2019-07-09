@@ -2,7 +2,6 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
-import { TaskModel } from 'src/app/tasks/models/task.model';
 
 const reducer = createReducer(
   initialTasksState,
@@ -42,10 +41,10 @@ const reducer = createReducer(
       loaded: false
     };
   }),
-  on(TasksActions.getTaskSuccess, (state, task) => {
+  on(TasksActions.getTaskSuccess, (state, props) => {
     console.log('GET_TASK action being handled!');
-    // remove property type
-    const { type: deleted, ...selectedTask } = { ...task };
+
+    const selectedTask = { ...props.task };
     return {
       ...state,
       loading: false,
@@ -69,10 +68,10 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.createTaskSuccess, (state, task) => {
+  on(TasksActions.createTaskSuccess, (state, props) => {
     console.log('CREATE_TASK_SUCCESS action being handled!');
-    const { type: deleted, ...taskToCreate } = { ...task };
-    const data = [...state.data, taskToCreate];
+    const task = { ...props.task };
+    const data = [...state.data, task];
 
     return {
       ...state,
@@ -94,13 +93,14 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.updateTaskSuccess, (state, task) => {
+  on(TasksActions.updateTaskSuccess, (state, props) => {
     console.log('UPDATE_TASK_SUCCESS action being handled!');
     const data = [...state.data];
+    const task = props.task;
+
     const index = data.findIndex(t => t.id === task.id);
 
-    const { type: deleted, ...taskToUpdate } = { ...task };
-    data[index] = taskToUpdate;
+    data[index] = { ...task };
 
     return {
       ...state,
@@ -122,9 +122,9 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.deleteTaskSuccess, (state, task) => {
+  on(TasksActions.deleteTaskSuccess, (state, props) => {
     console.log('DELETE_TASK_SUCCESS action being handled!');
-    const data = state.data.filter(t => t.id !== task.id);
+    const data = state.data.filter(t => t.id !== props.task.id);
 
     return {
       ...state,
