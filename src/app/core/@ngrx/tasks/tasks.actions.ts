@@ -34,7 +34,7 @@ export const createTask = createAction(
 
 export const createTaskSuccess = createAction(
   '[Tasks] CREATE_TASK_SUCCESS',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
 export const createTaskError = createAction(

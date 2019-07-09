@@ -68,10 +68,10 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.createTaskSuccess, (state, task) => {
+  on(TasksActions.createTaskSuccess, (state, props) => {
     console.log('CREATE_TASK_SUCCESS action being handled!');
-    const { type: deleted, ...taskToCreate } = { ...task };
-    const data = [...state.data, taskToCreate];
+    const task = { ...props.task };
+    const data = [...state.data, task];
 
     return {
       ...state,

@@ -8,7 +8,7 @@ import * as TasksActions from './tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { concatMap, pluck, switchMap, map } from 'rxjs/operators';
+import { concatMap, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { TaskModel, Task } from '../../../tasks/models/task.model';
@@ -67,16 +67,13 @@ export class TasksEffects {
   createTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.createTask),
-      map(action => {
-        const { type: deleted, ...task } = { ...action };
-        return task;
-      }),
+      pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .createTask(task)
-          .then(createdTask => {
+          .then((createdTask: Task) => {
             this.router.navigate(['/home']);
-            return TasksActions.createTaskSuccess(createdTask);
+            return TasksActions.createTaskSuccess({ task: createdTask });
           })
           .catch(error => TasksActions.createTaskError({ error }))
       )
