@@ -14,7 +14,7 @@ import {
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 
-import { UserModel } from './../../models/user.model';
+import { UserModel, User } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
@@ -65,6 +65,7 @@ export class UserListComponent implements OnInit {
   }
 
   onDeleteUser(user: UserModel) {
-    this.store.dispatch(UsersActions.deleteUser(user));
+    const userToDelete: User = { ...user };
+    this.store.dispatch(UsersActions.deleteUser({ user: userToDelete }));
   }
 }

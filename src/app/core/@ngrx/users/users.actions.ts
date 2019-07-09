@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { UserModel } from './../../../users/models/user.model';
+import { UserModel, User } from './../../../users/models/user.model';
 
 export const getUsers = createAction('[Users] GET_USERS');
 export const getUsersSuccess = createAction(
@@ -14,12 +14,12 @@ export const getUsersError = createAction(
 
 export const createUser = createAction(
   '[Users] CREATE_USER',
-  props<UserModel>()
+  props<{ user: User }>()
 );
 
 export const createUserSuccess = createAction(
   '[Users] CREATE_USER_SUCCESS',
-  props<UserModel>()
+  props<{ user: User }>()
 );
 
 export const createUserError = createAction(
@@ -29,12 +29,12 @@ export const createUserError = createAction(
 
 export const updateUser = createAction(
   '[Users] UPDATE_USER',
-  props<UserModel>()
+  props<{ user: User }>()
 );
 
 export const updateUserSuccess = createAction(
   '[Users] UPDATE_USER_SUCCESS',
-  props<UserModel>()
+  props<{ user: User }>()
 );
 
 export const updateUserError = createAction(
@@ -44,12 +44,12 @@ export const updateUserError = createAction(
 
 export const deleteUser = createAction(
   '[Users] DELETE_USER',
-  props<UserModel>()
+  props<{ user: User }>()
 );
 
 export const deleteUserSuccess = createAction(
   '[Users] DELETE_USER_SUCCESS',
-  props<UserModel>()
+  props<{ user: User }>()
 );
 
 export const deleteUserError = createAction(
@@ -59,5 +59,5 @@ export const deleteUserError = createAction(
 
 export const setOriginalUser = createAction(
   '[Users] SET_ORIGINAL_USER',
-  props<UserModel>()
+  props<{ user: User }>()
 );

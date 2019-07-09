@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { UsersState, initialUsersState } from './users.state';
 import * as UsersActions from './users.actions';
-import { UserModel } from './../../../users/models/user.model';
+import { User } from './../../../users/models/user.model';
 
 const reducer = createReducer(
   initialUsersState,
@@ -17,7 +17,7 @@ const reducer = createReducer(
     const users = [...props.users];
 
     const entities = users.reduce(
-      (result: { [id: number]: UserModel }, user: UserModel) => {
+      (result: { [id: number]: User }, user: User) => {
         return {
           ...result,
           [user.id]: user
@@ -47,11 +47,11 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.createUserSuccess, (state, user) => {
-    const { type: deleted, ...createdUser } = { ...user };
+  on(UsersActions.createUserSuccess, (state, props) => {
+    const createdUser = { ...props.user };
     const entities = {
       ...state.entities,
-      [user.id]: createdUser
+      [createdUser.id]: createdUser
     };
     const originalUser = { ...createdUser };
 
@@ -71,11 +71,11 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.updateUserSuccess, (state, user) => {
-    const { type: deleted, ...updatedUser } = { ...user };
+  on(UsersActions.updateUserSuccess, (state, props) => {
+    const updatedUser = { ...props.user };
     const entities = {
       ...state.entities,
-      [user.id]: updatedUser
+      [updatedUser.id]: updatedUser
     };
     const originalUser = { ...updatedUser };
 
@@ -95,8 +95,8 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.deleteUserSuccess, (state, user) => {
-    const { [user.id]: removed, ...entities } = state.entities;
+  on(UsersActions.deleteUserSuccess, (state, props) => {
+    const { [props.user.id]: removed, ...entities } = state.entities;
 
     return {
       ...state,
@@ -113,8 +113,8 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.setOriginalUser, (state, user) => {
-    const { type: deleted, ...originalUser } = { ...user };
+  on(UsersActions.setOriginalUser, (state, props) => {
+    const originalUser = { ...props.user };
 
     return {
       ...state,
