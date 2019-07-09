@@ -30,7 +30,7 @@ export class UserResolveGuard implements Resolve<UserModel> {
 
     return this.store.pipe(
       select(selectSelectedUserByUrl),
-      tap(user => this.store.dispatch(UsersActions.setOriginalUser(user))),
+      tap(user => this.store.dispatch(UsersActions.setOriginalUser({ user }))),
       delay(2000),
       map((user: UserModel) => {
         if (user) {

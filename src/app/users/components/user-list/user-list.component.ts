@@ -14,7 +14,7 @@ import {
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 
-import { UserModel } from './../../models/user.model';
+import { UserModel, User } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
 
 @Component({
@@ -30,29 +30,6 @@ export class UserListComponent implements OnInit {
   private editedUser: UserModel;
 
   constructor(private router: Router, private store: Store<AppState>) {}
-
-  // ngOnInit() {
-  //   this.users$ = this.userObservableService.getUsers();
-
-  //   // listen editedUserID from UserFormComponent
-  //   this.route.paramMap
-  //     .pipe(
-  //       switchMap((params: ParamMap) => {
-  //         return params.get('editedUserID')
-  //           ? this.userObservableService.getUser(+params.get('editedUserID'))
-  //           : of(null);
-  //       })
-  //     )
-  //     .subscribe(
-  //       (user: UserModel) => {
-  //         this.editedUser = { ...user };
-  //         console.log(
-  //           `Last time you edited user ${JSON.stringify(this.editedUser)}`
-  //         );
-  //       },
-  //       err => console.log(err)
-  //     );
-  // }
 
   ngOnInit() {
     this.users$ = this.store.pipe(select(selectUsers));
@@ -87,6 +64,7 @@ export class UserListComponent implements OnInit {
   }
 
   onDeleteUser(user: UserModel) {
-    this.store.dispatch(UsersActions.deleteUser(user));
+    const userToDelete: User = { ...user };
+    this.store.dispatch(UsersActions.deleteUser({ user: userToDelete }));
   }
 }

@@ -8,7 +8,7 @@ import * as UsersActions from './users.actions';
 
 // Rxjs
 import { Observable, of } from 'rxjs';
-import { switchMap, map, catchError, concatMap } from 'rxjs/operators';
+import { switchMap, map, catchError, concatMap, pluck } from 'rxjs/operators';
 
 import { UserObservableService } from './../../../users/services';
 import { UserModel } from '../../../users/models/user.model';
@@ -38,15 +38,12 @@ export class UsersEffects {
   updateUser$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(UsersActions.updateUser),
-      map(action => {
-        const { type: deleted, ...user } = { ...action };
-        return user;
-      }),
+      pluck('user'),
       concatMap((user: UserModel) =>
         this.userObservableService.updateUser(user).pipe(
           map(updatedUser => {
             this.router.navigate(['/users', { editedUserID: updatedUser.id }]);
-            return UsersActions.updateUserSuccess(updatedUser);
+            return UsersActions.updateUserSuccess({ user: updatedUser });
           }),
           catchError(error => of(UsersActions.updateUserError({ error })))
         )
@@ -57,15 +54,12 @@ export class UsersEffects {
   createUser$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(UsersActions.createUser),
-      map(action => {
-        const { type: deleted, ...user } = { ...action };
-        return user;
-      }),
+      pluck('user'),
       concatMap((user: UserModel) =>
         this.userObservableService.createUser(user).pipe(
           map(createdUser => {
             this.router.navigate(['/users']);
-            return UsersActions.createUserSuccess(createdUser);
+            return UsersActions.createUserSuccess({ user: createdUser });
           }),
           catchError(error => of(UsersActions.createUserError({ error })))
         )
@@ -76,15 +70,12 @@ export class UsersEffects {
   deleteUser$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(UsersActions.deleteUser),
-      map(action => {
-        const { type: deleted, ...user } = { ...action };
-        return user;
-      }),
+      pluck('user'),
       concatMap((user: UserModel) =>
         this.userObservableService.deleteUser(user).pipe(
           // Note: json-server doesn't return deleted user
           // so we use user
-          map(() => UsersActions.deleteUserSuccess(user)),
+          map(() => UsersActions.deleteUserSuccess({ user })),
           catchError(error => of(UsersActions.deleteUserError({ error })))
         )
       )

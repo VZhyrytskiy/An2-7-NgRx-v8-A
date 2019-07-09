@@ -12,7 +12,7 @@ import { AppState, selectUsersOriginalUser } from './../../../core/@ngrx';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 
 import { DialogService, CanComponentDeactivate } from './../../../core';
-import { UserModel } from './../../models/user.model';
+import { UserModel, User } from './../../models/user.model';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -37,12 +37,12 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   onSaveUser() {
-    const user = { ...this.user };
+    const user = { ...this.user } as User;
 
     if (user.id) {
-      this.store.dispatch(UsersActions.updateUser(user));
+      this.store.dispatch(UsersActions.updateUser({ user }));
     } else {
-      this.store.dispatch(UsersActions.createUser(user));
+      this.store.dispatch(UsersActions.createUser({ user }));
     }
   }
 
