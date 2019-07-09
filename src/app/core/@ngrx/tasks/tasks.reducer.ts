@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
-import { TasksState, initialTasksState } from './tasks.state';
+import { adapter, TasksState, initialTasksState } from './tasks.state';
 import * as TasksActions from './tasks.actions';
 
 const reducer = createReducer(
@@ -12,16 +12,22 @@ const reducer = createReducer(
       loading: true
     };
   }),
-  on(TasksActions.getTasksSuccess, (state, props) => {
+  on(TasksActions.getTasksSuccess, (state, { tasks }) => {
     console.log('GET_TASKS_SUCCESS action being handled!');
-    const data = [...props.tasks];
-    return {
+    return adapter.addAll(tasks, {
       ...state,
-      data,
       loading: false,
       loaded: true,
       selectedTask: null
-    };
+    });
+    // const data = [...props.tasks];
+    // return {
+    //   ...state,
+    //   data,
+    //   loading: false,
+    //   loaded: true,
+    //   selectedTask: null
+    // };
   }),
   on(TasksActions.getTasksError, (state, props) => {
     console.log('GET_TASKS_ERROR action being handled!');
@@ -39,15 +45,16 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.createTaskSuccess, (state, props) => {
+  on(TasksActions.createTaskSuccess, (state, { task }) => {
     console.log('CREATE_TASK_SUCCESS action being handled!');
-    const task = { ...props.task };
-    const data = [...state.data, task];
+    return adapter.addOne(task, state);
+    // const task = { ...props.task };
+    // const data = [...state.data, task];
 
-    return {
-      ...state,
-      data
-    };
+    // return {
+    //   ...state,
+    //   data
+    // };
   }),
 
   on(TasksActions.createTaskError, (state, props) => {
@@ -64,19 +71,20 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.updateTaskSuccess, (state, props) => {
+  on(TasksActions.updateTaskSuccess, (state, { task }) => {
     console.log('UPDATE_TASK_SUCCESS action being handled!');
-    const data = [...state.data];
-    const task = props.task;
+    return adapter.updateOne({ id: task.id, changes: task }, state);
+    // const data = [...state.data];
+    // const task = props.task;
 
-    const index = data.findIndex(t => t.id === task.id);
+    // const index = data.findIndex(t => t.id === task.id);
 
-    data[index] = { ...task };
+    // data[index] = { ...task };
 
-    return {
-      ...state,
-      data
-    };
+    // return {
+    //   ...state,
+    //   data
+    // };
   }),
 
   on(TasksActions.updateTaskError, (state, props) => {
@@ -93,14 +101,15 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.deleteTaskSuccess, (state, props) => {
+  on(TasksActions.deleteTaskSuccess, (state, { task }) => {
     console.log('DELETE_TASK_SUCCESS action being handled!');
-    const data = state.data.filter(t => t.id !== props.task.id);
+    return adapter.removeOne(task.id, state);
+    // const data = state.data.filter(t => t.id !== props.task.id);
 
-    return {
-      ...state,
-      data
-    };
+    // return {
+    //   ...state,
+    //   data
+    // };
   }),
 
   on(TasksActions.deleteTaskError, (state, props) => {
