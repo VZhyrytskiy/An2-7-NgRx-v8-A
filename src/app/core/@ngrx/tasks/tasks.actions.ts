@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { TaskModel } from './../../../tasks/models/task.model';
+import { Task, TaskModel } from './../../../tasks/models/task.model';
 
 export const getTasks = createAction('[Tasks] GET_TASKS');
 export const getTasksSuccess = createAction(
@@ -19,7 +19,7 @@ export const getTask = createAction(
 
 export const getTaskSuccess = createAction(
   '[Tasks] GET_TASK_SUCCESS',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
 export const getTaskError = createAction(
@@ -29,7 +29,7 @@ export const getTaskError = createAction(
 
 export const createTask = createAction(
   '[Tasks] CREATE_TASK',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
 export const createTaskSuccess = createAction(
@@ -44,12 +44,12 @@ export const createTaskError = createAction(
 
 export const updateTask = createAction(
   '[Tasks] UPDATE_TASK',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
 export const updateTaskSuccess = createAction(
   '[Tasks] UPDATE_TASK_SUCCESS',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
 export const updateTaskError = createAction(
@@ -59,7 +59,10 @@ export const updateTaskError = createAction(
 
 export const deleteTask = createAction(
   '[Tasks] DELETE_TASK',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
-export const doneTask = createAction('[Tasks] DONE_TASK', props<TaskModel>());
+export const doneTask = createAction(
+  '[Tasks] DONE_TASK',
+  props<{ task: Task }>()
+);

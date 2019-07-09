@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { concatMap, pluck, switchMap, map } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { TaskModel } from '../../../tasks/models/task.model';
+import { TaskModel, Task } from '../../../tasks/models/task.model';
 
 @Injectable()
 export class TasksEffects {
@@ -42,7 +42,7 @@ export class TasksEffects {
       switchMap(taskID =>
         this.taskPromiseService
           .getTask(taskID)
-          .then(task => TasksActions.getTaskSuccess(task))
+          .then(task => TasksActions.getTaskSuccess({ task }))
           .catch(error => TasksActions.getTaskError({ error }))
       )
     )
@@ -51,16 +51,13 @@ export class TasksEffects {
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.updateTask),
-      map(action => {
-        const { type: deleted, ...task } = { ...action };
-        return task;
-      }),
+      pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .updateTask(task)
-          .then(updatedTask => {
+          .then((updatedTask: Task) => {
             this.router.navigate(['/home']);
-            return TasksActions.updateTaskSuccess(updatedTask);
+            return TasksActions.updateTaskSuccess({ task: updatedTask });
           })
           .catch(error => TasksActions.updateTaskError({ error }))
       )
