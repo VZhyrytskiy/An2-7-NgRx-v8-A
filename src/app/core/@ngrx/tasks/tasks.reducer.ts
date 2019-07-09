@@ -71,14 +71,13 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.updateTaskSuccess, (state, task) => {
+  on(TasksActions.updateTaskSuccess, (state, props) => {
     console.log('UPDATE_TASK_SUCCESS action being handled!');
     const data = [...state.data];
+    const task = props.task;
     const index = data.findIndex(t => t.id === task.id);
 
-    const { type: deleted, ...taskToUpdate } = { ...task };
-    data[index] = taskToUpdate;
-
+    data[index] = { ...task };
 
     return {
       ...state,

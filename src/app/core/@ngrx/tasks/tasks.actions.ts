@@ -39,7 +39,7 @@ export const updateTask = createAction(
 
 export const updateTaskSuccess = createAction(
   '[Tasks] UPDATE_TASK_SUCCESS',
-  props<TaskModel>()
+  props<{ task: Task }>()
 );
 
 export const updateTaskError = createAction(
