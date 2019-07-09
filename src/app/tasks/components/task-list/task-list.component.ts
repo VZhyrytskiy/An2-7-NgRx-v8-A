@@ -45,6 +45,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onDeleteTask(task: TaskModel) {
-    this.store.dispatch(TasksActions.deleteTask(task));
+    const taskToDelete: Task = { ...task };
+    this.store.dispatch(TasksActions.deleteTask({ task: taskToDelete }));
   }
 }

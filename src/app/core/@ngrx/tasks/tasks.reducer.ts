@@ -122,9 +122,9 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.deleteTaskSuccess, (state, task) => {
+  on(TasksActions.deleteTaskSuccess, (state, props) => {
     console.log('DELETE_TASK_SUCCESS action being handled!');
-    const data = state.data.filter(t => t.id !== task.id);
+    const data = state.data.filter(t => t.id !== props.task.id);
 
     return {
       ...state,
