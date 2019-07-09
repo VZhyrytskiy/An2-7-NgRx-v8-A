@@ -3,7 +3,7 @@ import { UrlTree } from '@angular/router';
 
 // rxjs
 import { Observable, of, Subscription } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
@@ -20,7 +20,7 @@ import {
   DialogService,
   CanComponentDeactivate
 } from './../../../core';
-import { UserModel } from './../../models/user.model';
+import { UserModel, User } from './../../models/user.model';
 
 @Component({
   templateUrl: './user-form.component.html',
@@ -44,12 +44,12 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   onSaveUser() {
-    const user = { ...this.user };
+    const user = { ...this.user } as User;
 
     if (user.id) {
-      this.store.dispatch(UsersActions.updateUser(user));
+      this.store.dispatch(UsersActions.updateUser({ user }));
     } else {
-      this.store.dispatch(UsersActions.createUser(user));
+      this.store.dispatch(UsersActions.createUser({ user }));
     }
   }
 
