@@ -10,7 +10,7 @@ import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 import { Observable, Subscription } from 'rxjs';
 import { AutoUnsubscribe } from './../../../core';
 
-import { TaskModel } from './../../models/task.model';
+import { TaskModel, Task } from './../../models/task.model';
 
 @Component({
   templateUrl: './task-form.component.html',
@@ -33,7 +33,7 @@ export class TaskFormComponent implements OnInit {
     this.tasksState$ = this.store.pipe(select('tasks'));
     this.sub = this.tasksState$.subscribe(tasksState => {
       if (tasksState.selectedTask) {
-        this.task = { ...tasksState.selectedTask };
+        this.task = { ...tasksState.selectedTask } as TaskModel;
       } else {
         this.task = new TaskModel();
       }
@@ -48,12 +48,12 @@ export class TaskFormComponent implements OnInit {
   }
 
   onSaveTask() {
-    const task = { ...this.task };
+    const task = { ...this.task } as Task;
 
     if (task.id) {
-      this.store.dispatch(TasksActions.updateTask(task));
+      this.store.dispatch(TasksActions.updateTask({ task }));
     } else {
-      this.store.dispatch(TasksActions.createTask(task));
+      this.store.dispatch(TasksActions.createTask({ task }));
     }
   }
 

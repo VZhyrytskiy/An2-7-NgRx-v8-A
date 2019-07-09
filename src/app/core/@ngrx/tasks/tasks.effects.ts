@@ -8,10 +8,10 @@ import * as TasksActions from './tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { concatMap, pluck, switchMap, map } from 'rxjs/operators';
+import { concatMap, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
-import { TaskModel } from '../../../tasks/models/task.model';
+import { TaskModel, Task } from '../../../tasks/models/task.model';
 
 @Injectable()
 export class TasksEffects {
@@ -42,7 +42,7 @@ export class TasksEffects {
       switchMap(taskID =>
         this.taskPromiseService
           .getTask(taskID)
-          .then(task => TasksActions.getTaskSuccess(task))
+          .then(task => TasksActions.getTaskSuccess({ task }))
           .catch(error => TasksActions.getTaskError({ error }))
       )
     )
@@ -51,16 +51,13 @@ export class TasksEffects {
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.updateTask),
-      map(action => {
-        const { type: deleted, ...task } = { ...action };
-        return task;
-      }),
+      pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .updateTask(task)
-          .then(updatedTask => {
+          .then((updatedTask: Task) => {
             this.router.navigate(['/home']);
-            return TasksActions.updateTaskSuccess(updatedTask);
+            return TasksActions.updateTaskSuccess({ task: updatedTask });
           })
           .catch(error => TasksActions.updateTaskError({ error }))
       )
@@ -70,16 +67,13 @@ export class TasksEffects {
   createTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.createTask),
-      map(action => {
-        const { type: deleted, ...task } = { ...action };
-        return task;
-      }),
+      pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .createTask(task)
-          .then(createdTask => {
+          .then((createdTask: Task) => {
             this.router.navigate(['/home']);
-            return TasksActions.createTaskSuccess(createdTask);
+            return TasksActions.createTaskSuccess({ task: createdTask });
           })
           .catch(error => TasksActions.createTaskError({ error }))
       )
@@ -89,16 +83,13 @@ export class TasksEffects {
   deleteTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(TasksActions.deleteTask),
-      map(action => {
-        const { type: deleted, ...task } = { ...action };
-        return task;
-      }),
+      pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
           .deleteTask(task)
           .then(
             (/* method delete for this API returns nothing, so we will use previous task */) => {
-              return TasksActions.deleteTaskSuccess(task);
+              return TasksActions.deleteTaskSuccess({ task });
             }
           )
           .catch(error => TasksActions.deleteTaskError({ error }))
