@@ -2,20 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 // @NgRx
 import { Store, select } from '@ngrx/store';
-import * as UsersActions from './../../../core/@ngrx/users/users.actions';
+import { EntityServices, EntityCollectionService } from '@ngrx/data';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-import {
-  AppState,
-  selectUsers,
-  selectUsersError,
-  selectEditedUser
-} from './../../../core/@ngrx';
+import { AppState } from './../../../core/@ngrx';
+import { selectEditedUser } from './../../../core/@ngrx/data/entity-store.module';
 
 // rxjs
 import { Observable, Subscription } from 'rxjs';
 
 import { UserModel, User } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
+import { map } from 'rxjs/operators';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -29,13 +26,25 @@ export class UserListComponent implements OnInit {
   private subscription: Subscription;
   private editedUser: UserModel;
 
-  constructor(private store: Store<AppState>) {}
+  private userService: EntityCollectionService<User>;
+
+  constructor(private store: Store<AppState>, entitytServices: EntityServices) {
+    // получить сервис для entity User
+    this.userService = entitytServices.getEntityCollectionService('User');
+  }
 
   ngOnInit() {
-    this.users$ = this.store.pipe(select(selectUsers));
-    this.usersError$ = this.store.pipe(select(selectUsersError));
+    // использовать стандартный селектор
+    this.users$ = this.userService.entities$;
+
+    // использовать стандартный селектор с преобразованием
+    // ошибка храниться в EntityAction
+    this.usersError$ = this.userService.errors$.pipe(
+      map(action => action.payload.data.error.error.message)
+    );
 
     // listen editedUserID from UserFormComponent
+    // изменен селектор
     this.subscription = this.store.pipe(select(selectEditedUser)).subscribe(
       user => {
         this.editedUser = { ...user };
@@ -64,7 +73,7 @@ export class UserListComponent implements OnInit {
   }
 
   onDeleteUser(user: UserModel) {
-    const userToDelete: User = { ...user };
-    this.store.dispatch(UsersActions.deleteUser({ user: userToDelete }));
+    // использовать сервис для генерации EntitytAction
+    this.userService.delete(user.id);
   }
 }
