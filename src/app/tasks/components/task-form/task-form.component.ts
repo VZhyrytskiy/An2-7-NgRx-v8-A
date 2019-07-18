@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // @NgRx
-import { Store, select } from '@ngrx/store';
-import { AppState, selectSelectedTaskByUrl } from './../../../core/@ngrx';
-import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
-import * as RouterActions from './../../../core/@ngrx/router/router.actions';
+import { TasksFacade } from 'src/app/core/@ngrx/tasks/tasks.facade';
 
 // rxjs
 import { Subscription } from 'rxjs';
@@ -22,29 +19,23 @@ export class TaskFormComponent implements OnInit {
 
   private sub: Subscription;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private tasksFacade: TasksFacade) {}
 
   ngOnInit(): void {
-    this.sub = this.store
-      .pipe(select(selectSelectedTaskByUrl))
-      .subscribe(task => (this.task = { ...task }));
+    this.sub = this.tasksFacade.selectedTaskByUrl$.subscribe(
+      task => (this.task = { ...task })
+    );
   }
 
   onSaveTask() {
     const task = { ...this.task } as Task;
 
-    if (task.id) {
-      this.store.dispatch(TasksActions.updateTask({ task }));
-    } else {
-      this.store.dispatch(TasksActions.createTask({ task }));
-    }
+    const method = task.id ? 'updateTask' : 'createTask';
+    this.tasksFacade[method]({ task });
+    this.onGoBack();
   }
 
   onGoBack(): void {
-    this.store.dispatch(
-      RouterActions.go({
-        path: ['/home']
-      })
-    );
+    this.tasksFacade.goTo({ path: ['/home'] });
   }
 }
