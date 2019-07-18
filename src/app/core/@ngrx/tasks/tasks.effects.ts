@@ -21,7 +21,7 @@ import { TaskPromiseService } from './../../../tasks/services';
 import { TaskModel, Task } from '../../../tasks/models/task.model';
 
 @Injectable()
-export class TasksEffects implements OnInitEffects, OnRunEffects {
+export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   constructor(
     private actions$: Actions,
     private router: Router,
@@ -114,12 +114,12 @@ export class TasksEffects implements OnInitEffects, OnRunEffects {
 
   // Implement the OnRunEffects interface to control the lifecycle
   // of the resolved effects.
-  ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
-    return resolvedEffects$.pipe(
-      // tap(val => console.log('ngrxOnRunEffects:', val)),
-      // perform until create new task
-      // only for demo purpose
-      takeUntil(this.actions$.pipe(ofType(TasksActions.createTask)))
-    );
-  }
+  // ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
+  //   return resolvedEffects$.pipe(
+  //     // tap(val => console.log('ngrxOnRunEffects:', val)),
+  //     // perform until create new task
+  //     // only for demo purpose
+  //     takeUntil(this.actions$.pipe(ofType(TasksActions.createTask)))
+  //   );
+  // }
 }
