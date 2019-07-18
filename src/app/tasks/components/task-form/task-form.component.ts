@@ -32,7 +32,6 @@ export class TaskFormComponent implements OnInit {
 
     const method = task.id ? 'updateTask' : 'createTask';
     this.tasksFacade[method]({ task });
-    this.onGoBack();
   }
 
   onGoBack(): void {
