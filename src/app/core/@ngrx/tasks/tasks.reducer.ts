@@ -99,8 +99,7 @@ const reducer = createReducer(
     const task = props.task;
     const index = data.findIndex(t => t.id === task.id);
 
-    const { type: deleted, ...taskToUpdate } = { ...task };
-    data[index] = taskToUpdate;
+    data[index] = { ...task };
 
     return {
       ...state,
