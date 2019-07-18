@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 // @ngrx
-import { TasksFacade } from 'src/app/core/@ngrx/tasks/tasks.facade';
+import { TasksFacade } from './../../../core/@ngrx';
 
 import { Task, TaskModel } from './../../models/task.model';
 
