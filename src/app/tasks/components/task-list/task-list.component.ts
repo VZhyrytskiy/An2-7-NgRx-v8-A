@@ -40,7 +40,7 @@ export class TaskListComponent implements OnInit {
     // task is not plain object
     // taskToComplete is a plain object
     const taskToComplete: Task = { ...task };
-    this.store.dispatch(TasksActions.doneTask({ task: taskToComplete }));
+    this.store.dispatch(TasksActions.completeTask({ task: taskToComplete }));
   }
 
   onEditTask(task: TaskModel): void {
