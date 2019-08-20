@@ -21,12 +21,18 @@ const reducer = createReducer(
     console.log('UPDATE_TASK action being handled!');
     return { ...state };
   }),
+  on(TasksActions.completeTask, state => {
+    console.log('COMPLETE_TASK action being handled!');
+    return { ...state };
+  }),
   on(TasksActions.deleteTask, state => {
     console.log('DELETE_TASK action being handled!');
     return { ...state };
   })
 );
 
+// Must wrap the constant in a function as AOT compiler does not currently
+// support function expressions
 export function tasksReducer(state: TasksState | undefined, action: Action) {
   return reducer(state, action);
 }
