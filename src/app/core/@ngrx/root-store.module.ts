@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { TasksStoreModule } from './tasks/tasks-store.module';
 import { metaReducers } from './meta-reducers';
 import { routerReducers, CustomSerializer } from './router';
@@ -25,12 +25,14 @@ import { environment } from './../../../environments/environment';
         strictStateSerializability: true,
         // router action is not serializable
         // set false
-        strictActionSerializability: false
+        strictActionSerializability: true
       }
     }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
+      stateKey: 'router',
+      routerState: RouterState.Minimal
+      // serializer: CustomSerializer
     }),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     TasksStoreModule,
