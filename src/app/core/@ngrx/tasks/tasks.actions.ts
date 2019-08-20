@@ -34,12 +34,12 @@ export const createTask = createAction(
 );
 
 export const createTaskSuccess = createAction(
-  '[Tasks] CREATE_TASK_SUCCESS',
+  '[Tasks API] CREATE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const createTaskError = createAction(
-  '[Tasks] CREATE_TASK_ERROR',
+  '[Tasks API] CREATE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
