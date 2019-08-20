@@ -21,7 +21,7 @@ import { TaskPromiseService } from './../../../tasks/services';
 import { TaskModel, Task } from '../../../tasks/models/task.model';
 
 @Injectable()
-export class TasksEffects implements OnInitEffects /*, OnRunEffects */{
+export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
   constructor(
     private actions$: Actions,
     private router: Router,
@@ -57,7 +57,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */{
 
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(TasksActions.updateTask),
+      ofType(TasksActions.updateTask, TasksActions.completeTask),
       pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
