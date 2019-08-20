@@ -74,8 +74,8 @@ const reducer = createReducer(
     console.log('DELETE_TASK action being handled!');
     return { ...state };
   }),
-  on(TasksActions.doneTask, (state, props) => {
-    console.log('DONE_TASK action being handled!');
+  on(TasksActions.completeTask, (state, props) => {
+    console.log('COMPLETE_TASK action being handled!');
 
     const id = props.task.id;
     const data = state.data.map(t => {
@@ -93,6 +93,8 @@ const reducer = createReducer(
   })
 );
 
+// Must wrap the constant in a function as AOT compiler does not currently
+// support function expressions
 export function tasksReducer(state: TasksState | undefined, action: Action) {
   return reducer(state, action);
 }
