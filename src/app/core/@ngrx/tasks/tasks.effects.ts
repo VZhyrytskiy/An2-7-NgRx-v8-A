@@ -43,7 +43,7 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
 
   updateTask$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(TasksActions.updateTask),
+      ofType(TasksActions.updateTask, TasksActions.completeTask),
       pluck('task'),
       concatMap((task: TaskModel) =>
         this.taskPromiseService
