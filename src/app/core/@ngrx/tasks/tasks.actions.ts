@@ -19,12 +19,12 @@ export const getTask = createAction(
 );
 
 export const getTaskSuccess = createAction(
-  '[Tasks] GET_TASK_SUCCESS',
+  '[Tasks API] GET_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const getTaskError = createAction(
-  '[Tasks] GET_TASK_ERROR',
+  '[Tasks API] GET_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
