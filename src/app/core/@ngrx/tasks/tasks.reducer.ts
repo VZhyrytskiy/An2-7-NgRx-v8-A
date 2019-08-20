@@ -27,6 +27,8 @@ const reducer = createReducer(
   })
 );
 
+// Must wrap the constant in a function as AOT compiler does not currently
+// support function expressions
 export function tasksReducer(state: TasksState | undefined, action: Action) {
   return reducer(state, action);
 }
