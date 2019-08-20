@@ -5,6 +5,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './users.effects';
 import { usersReducer } from './users.reducer';
+import { UserObservableService } from 'src/app/users';
+import { UsersAPIProvider } from 'src/app/users/users.config';
 
 @NgModule({
   declarations: [],
@@ -12,6 +14,7 @@ import { usersReducer } from './users.reducer';
     CommonModule,
     StoreModule.forFeature('users', usersReducer),
     EffectsModule.forFeature([UsersEffects])
-  ]
+  ],
+  providers: [UserObservableService, UsersAPIProvider]
 })
 export class UsersStoreModule {}
