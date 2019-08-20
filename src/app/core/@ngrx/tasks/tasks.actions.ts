@@ -44,21 +44,16 @@ export const completeTask = createAction(
 );
 
 export const updateTaskSuccess = createAction(
-  '[Tasks] UPDATE_TASK_SUCCESS',
+  '[Tasks API] UPDATE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const updateTaskError = createAction(
-  '[Tasks] UPDATE_TASK_ERROR',
+  '[Tasks API] UPDATE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
 export const deleteTask = createAction(
   '[Task List Page] DELETE_TASK',
-  props<{ task: Task }>()
-);
-
-export const doneTask = createAction(
-  '[Tasks] DONE_TASK',
   props<{ task: Task }>()
 );
