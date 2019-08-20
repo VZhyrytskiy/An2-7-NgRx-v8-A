@@ -5,10 +5,12 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
+import { TasksStoreModule } from './tasks/tasks-store.module';
 import { metaReducers } from './meta-reducers';
 import { routerReducers, CustomSerializer, RouterEffects } from './router';
 import { environment } from './../../../environments/environment';
+import { UsersStoreModule } from './users/users-store.module';
 
 @NgModule({
   declarations: [],
@@ -24,15 +26,19 @@ import { environment } from './../../../environments/environment';
         strictStateSerializability: true,
         // router action is not serializable
         // set false
-        strictActionSerializability: false
+        strictActionSerializability: true
       }
     }),
     EffectsModule.forRoot([RouterEffects]),
     StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
+      routerState: RouterState.Minimal,
       serializer: CustomSerializer
     }),
     // Instrumentation must be imported after importing StoreModule (config is optional)
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    TasksStoreModule,
+    UsersStoreModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ]
 })
-export class CoreStoreModule {}
+export class RootStoreModule {}
