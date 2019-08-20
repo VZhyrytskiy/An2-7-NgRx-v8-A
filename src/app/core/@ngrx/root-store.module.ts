@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
+import { TasksStoreModule } from './tasks/tasks-store.module';
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import { StoreModule } from '@ngrx/store';
           strictActionSerializability: true
         }
       }
-    )
+    ),
+    TasksStoreModule
   ]
 })
-export class CoreStoreModule {}
+export class RootStoreModule {}
