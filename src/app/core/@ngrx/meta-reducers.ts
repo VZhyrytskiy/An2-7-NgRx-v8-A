@@ -4,8 +4,8 @@ import { ActionReducer, MetaReducer } from '@ngrx/store';
 // export is needed for aot compilation
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   return (state, action) => {
-    // console.log('state', state);
-    // console.log('action', action);
+    // console.log('state before: ', state);
+    // console.log('action: ', action);
 
     return reducer(state, action);
   };

@@ -87,7 +87,7 @@ export class UsersEffects {
         const actionType = action.type;
         let path: any[];
 
-        if (actionType === '[Users] UPDATE_USER') {
+        if (actionType === '[Add/Edit User Page] UPDATE_USER') {
           path = ['/users', { editedUserID: userID }];
         } else {
           path = ['/users'];
