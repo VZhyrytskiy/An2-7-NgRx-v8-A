@@ -31,8 +31,8 @@ import { environment } from './../../../environments/environment';
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
-      routerState: RouterState.Minimal
-      // serializer: CustomSerializer
+      routerState: RouterState.Minimal,
+      serializer: CustomSerializer
     }),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     TasksStoreModule,
