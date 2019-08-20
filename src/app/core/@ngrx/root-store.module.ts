@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // @Ngrx
 import { StoreModule } from '@ngrx/store';
+import { TasksStoreModule } from './tasks/tasks-store.module';
 import { metaReducers } from './meta-reducers';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { metaReducers } from './meta-reducers';
           strictActionSerializability: true
         }
       }
-    )
+    ),
+    TasksStoreModule
   ]
 })
-export class CoreStoreModule {}
+export class RootStoreModule {}
