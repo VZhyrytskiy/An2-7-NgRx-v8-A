@@ -64,7 +64,7 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.updateTaskSuccess, (state, props) => {
+  on(TasksActions.updateTaskSuccess, TasksActions.completeTask, (state, props) => {
     console.log('UPDATE_TASK_SUCCESS action being handled!');
     const data = [...state.data];
     const task = props.task;
@@ -110,9 +110,11 @@ const reducer = createReducer(
       ...state,
       error
     };
-  })
+  }),
 );
 
+// Must wrap the constant in a function as AOT compiler does not currently
+// support function expressions
 export function tasksReducer(state: TasksState | undefined, action: Action) {
   return reducer(state, action);
 }
