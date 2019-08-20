@@ -2,33 +2,34 @@ import { createAction, props } from '@ngrx/store';
 
 import { Task, TaskModel } from './../../../tasks/models/task.model';
 
-export const getTasks = createAction('[Tasks] GET_TASKS');
+export const getTasks = createAction('[Task List Page (App)] GET_TASKS');
+
 export const getTasksSuccess = createAction(
-  '[Tasks] GET_TASKS_SUCCEESS',
-  props<{ tasks: TaskModel[] }>()
+  '[Tasks API] GET_TASKS_SUCCEESS',
+  props<{ tasks: Task[] }>()
 );
 export const getTasksError = createAction(
-  '[Tasks] GET_TASKS_ERROR',
+  '[Tasks API] GET_TASKS_ERROR',
   props<{ error: Error | string }>()
 );
 
 export const getTask = createAction(
-  '[Tasks] GET_TASK',
+  '[Add/Edit Task Page (App)] GET_TASK',
   props<{ taskID: number }>()
 );
 
 export const getTaskSuccess = createAction(
-  '[Tasks] GET_TASK_SUCCESS',
+  '[Tasks API] GET_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const getTaskError = createAction(
-  '[Tasks] GET_TASK_ERROR',
+  '[Tasks API] GET_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
 export const createTask = createAction(
-  '[Tasks] CREATE_TASK',
+  '[Add/Edit Task Page] CREATE_TASK',
   props<{ task: Task }>()
 );
 
@@ -43,26 +44,26 @@ export const createTaskError = createAction(
 );
 
 export const updateTask = createAction(
-  '[Tasks] UPDATE_TASK',
+  '[Add/Edit Task Page] UPDATE_TASK',
+  props<{ task: Task }>()
+);
+
+export const completeTask = createAction(
+  '[Task List Page] COMPLETE_TASK',
   props<{ task: Task }>()
 );
 
 export const updateTaskSuccess = createAction(
-  '[Tasks] UPDATE_TASK_SUCCESS',
+  '[Tasks API] UPDATE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const updateTaskError = createAction(
-  '[Tasks] UPDATE_TASK_ERROR',
+  '[Tasks API] UPDATE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
 export const deleteTask = createAction(
-  '[Tasks] DELETE_TASK',
-  props<{ task: Task }>()
-);
-
-export const doneTask = createAction(
-  '[Tasks] DONE_TASK',
+  '[Task List Page] DELETE_TASK',
   props<{ task: Task }>()
 );
