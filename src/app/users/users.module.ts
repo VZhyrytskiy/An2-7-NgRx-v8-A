@@ -8,21 +8,8 @@ import { UsersServicesModule } from './users-services.module';
 import { UserComponent } from './components';
 import { UsersAPIProvider } from './users.config';
 
-// @NgRx
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { UsersEffects, usersReducer } from './../core/@ngrx';
-
-
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    UsersRoutingModule,
-    UsersServicesModule,
-    StoreModule.forFeature('users', usersReducer),
-    EffectsModule.forFeature([UsersEffects])
-  ],
+  imports: [CommonModule, FormsModule, UsersRoutingModule, UsersServicesModule],
   providers: [UsersAPIProvider],
   declarations: [UsersRoutingModule.components, UserComponent]
 })

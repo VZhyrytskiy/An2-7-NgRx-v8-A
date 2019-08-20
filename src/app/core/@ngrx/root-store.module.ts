@@ -10,6 +10,7 @@ import { TasksStoreModule } from './tasks/tasks-store.module';
 import { metaReducers } from './meta-reducers';
 import { routerReducers, CustomSerializer } from './router';
 import { environment } from './../../../environments/environment';
+import { UsersStoreModule } from './users/users-store.module';
 
 @NgModule({
   declarations: [],
@@ -36,7 +37,8 @@ import { environment } from './../../../environments/environment';
     }),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     TasksStoreModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    UsersStoreModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ]
 })
 export class RootStoreModule {}
