@@ -5,11 +5,11 @@ import { Task, TaskModel } from './../../../tasks/models/task.model';
 export const getTasks = createAction('[Task List Page (App)] GET_TASKS');
 
 export const getTasksSuccess = createAction(
-  '[Tasks API] GET_TASKS_SUCCEESS',
+  '[Get Tasks Effect] GET_TASKS_SUCCEESS',
   props<{ tasks: Task[] }>()
 );
 export const getTasksError = createAction(
-  '[Tasks API] GET_TASKS_ERROR',
+  '[Get Tasks Effect] GET_TASKS_ERROR',
   props<{ error: Error | string }>()
 );
 
@@ -29,12 +29,12 @@ export const getTaskError = createAction(
 );
 
 export const createTask = createAction(
-  '[Add/Edit Task Page] CREATE_TASK',
+  '[Task List Page] CREATE_TASK',
   props<{ task: Task }>()
 );
 
 export const updateTask = createAction(
-  '[Add/Edit Task Page] UPDATE_TASK',
+  '[Task List Page] UPDATE_TASK',
   props<{ task: Task }>()
 );
 
