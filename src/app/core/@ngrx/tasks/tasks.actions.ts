@@ -19,12 +19,12 @@ export const getTask = createAction(
 );
 
 export const createTask = createAction(
-  '[Add/Edit Task Page] CREATE_TASK',
+  '[Task List Page] CREATE_TASK',
   props<{ task: Task }>()
 );
 
 export const updateTask = createAction(
-  '[Add/Edit Task Page] UPDATE_TASK',
+  '[Task List Page] UPDATE_TASK',
   props<{ task: Task }>()
 );
 
