@@ -36,7 +36,7 @@ const reducer = createReducer(
       };
     }
   ),
-  
+
   on(TasksActions.getTask, state => {
     console.log('GET_TASK action being handled!');
     return {
@@ -66,10 +66,9 @@ const reducer = createReducer(
     return { ...state };
   }),
 
-  on(TasksActions.updateTaskSuccess, (state, props) => {
+  on(TasksActions.updateTaskSuccess, (state, { task }) => {
     console.log('UPDATE_TASK_SUCCESS action being handled!');
     const data = [...state.data];
-    const task = props.task;
     const index = data.findIndex(t => t.id === task.id);
 
     data[index] = { ...task };
@@ -80,9 +79,8 @@ const reducer = createReducer(
     };
   }),
 
-  on(TasksActions.updateTaskError, (state, props) => {
+  on(TasksActions.updateTaskError, (state, { error }) => {
     console.log('UPDATE_TASK_ERROR action being handled!');
-    const error = props.error;
     return {
       ...state,
       error

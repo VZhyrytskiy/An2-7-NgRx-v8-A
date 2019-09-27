@@ -44,12 +44,12 @@ export const completeTask = createAction(
 );
 
 export const updateTaskSuccess = createAction(
-  '[Tasks API] UPDATE_TASK_SUCCESS',
+  '[Update Task Effect] UPDATE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const updateTaskError = createAction(
-  '[Tasks API] UPDATE_TASK_ERROR',
+  '[Update Tasks Effect] UPDATE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
