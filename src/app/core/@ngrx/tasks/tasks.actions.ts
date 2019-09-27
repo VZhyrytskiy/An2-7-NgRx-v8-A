@@ -5,11 +5,11 @@ import { Task } from './../../../tasks/models/task.model';
 export const getTasks = createAction('[Task List Page (App)] GET_TASKS');
 
 export const getTasksSuccess = createAction(
-  '[Tasks API] GET_TASKS_SUCCEESS',
+  '[Get Tasks Effect] GET_TASKS_SUCCEESS',
   props<{ tasks: Task[] }>()
 );
 export const getTasksError = createAction(
-  '[Tasks API] GET_TASKS_ERROR',
+  '[Get Tasks Effect] GET_TASKS_ERROR',
   props<{ error: Error | string }>()
 );
 
@@ -19,32 +19,32 @@ export const getTask = createAction(
 );
 
 export const getTaskSuccess = createAction(
-  '[Tasks API] GET_TASK_SUCCESS',
+  '[Get Task Effect] GET_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const getTaskError = createAction(
-  '[Tasks API] GET_TASK_ERROR',
+  '[Get Task Effect] GET_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
 export const createTask = createAction(
-  '[Add/Edit Task Page] CREATE_TASK',
+  '[Task List Page] CREATE_TASK',
   props<{ task: Task }>()
 );
 
 export const createTaskSuccess = createAction(
-  '[Tasks API] CREATE_TASK_SUCCESS',
+  '[Create Task Effect] CREATE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const createTaskError = createAction(
-  '[Tasks API] CREATE_TASK_ERROR',
+  '[Create Task Effect] CREATE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
 export const updateTask = createAction(
-  '[Add/Edit Task Page] UPDATE_TASK',
+  '[Task List Page] UPDATE_TASK',
   props<{ task: Task }>()
 );
 
@@ -54,12 +54,12 @@ export const completeTask = createAction(
 );
 
 export const updateTaskSuccess = createAction(
-  '[Tasks API] UPDATE_TASK_SUCCESS',
+  '[Update Task Effect] UPDATE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const updateTaskError = createAction(
-  '[Tasks API] UPDATE_TASK_ERROR',
+  '[Update Tasks Effect] UPDATE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
 
@@ -69,11 +69,11 @@ export const deleteTask = createAction(
 );
 
 export const deleteTaskSuccess = createAction(
-  '[Tasks API] DELETE_TASK_SUCCESS',
+  '[Delete Task Effect] DELETE_TASK_SUCCESS',
   props<{ task: Task }>()
 );
 
 export const deleteTaskError = createAction(
-  '[Tasks API] DELETE_TASK_ERROR',
+  '[Delete Task Effect] DELETE_TASK_ERROR',
   props<{ error: Error | string }>()
 );
