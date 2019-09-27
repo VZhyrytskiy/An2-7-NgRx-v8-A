@@ -28,11 +28,13 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.task = new TaskModel();
-
     let observer = {
       next: tasksState => {
-        this.task = { ...tasksState.selectedTask } as TaskModel;
+        if (tasksState.selectedTask) {
+          this.task = { ...tasksState.selectedTask } as TaskModel;
+        } else {
+          this.task = new TaskModel();
+        }
       },
       error(err) {
         console.log(err);
