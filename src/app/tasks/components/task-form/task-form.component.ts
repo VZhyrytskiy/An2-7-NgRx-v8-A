@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 // @NgRx
@@ -7,8 +7,8 @@ import { AppState, TasksState } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
-import { Observable, Subscription } from 'rxjs';
-import { AutoUnsubscribe } from './../../../core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { TaskModel, Task } from './../../models/task.model';
 
@@ -16,12 +16,10 @@ import { TaskModel, Task } from './../../models/task.model';
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-@AutoUnsubscribe()
-export class TaskFormComponent implements OnInit {
+export class TaskFormComponent implements OnInit, OnDestroy {
   task: TaskModel;
-  tasksState$: Observable<TasksState>;
 
-  private sub: Subscription;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -32,17 +30,41 @@ export class TaskFormComponent implements OnInit {
   ngOnInit(): void {
     this.task = new TaskModel();
 
-    this.tasksState$ = this.store.pipe(select('tasks'));
-    this.sub = this.tasksState$.subscribe(
-      tasksState => (this.task = { ...tasksState.selectedTask } as TaskModel)
-    );
-
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      const id = params.get('taskID');
-      if (id) {
-        this.store.dispatch(TasksActions.getTask({ taskID: +id }));
+    let observer = {
+      next: tasksState => {
+        this.task = { ...tasksState.selectedTask } as TaskModel;
+      },
+      error(err) {
+        console.log(err);
+      },
+      complete() {
+        console.log('Stream is completed');
       }
-    });
+    };
+
+    this.store
+      .pipe(
+        select('tasks'),
+        takeUntil(this.componentDestroyed$)
+      )
+      .subscribe(observer);
+
+    observer = {
+      ...observer,
+      next: (params: ParamMap) => {
+        const id = params.get('taskID');
+        if (id) {
+          this.store.dispatch(TasksActions.getTask({ taskID: +id }));
+        }
+      }
+    };
+
+    this.route.paramMap.subscribe(observer);
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.complete();
   }
 
   onSaveTask() {
