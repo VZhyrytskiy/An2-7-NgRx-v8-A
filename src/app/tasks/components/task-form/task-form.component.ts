@@ -70,7 +70,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   }
 
   onSaveTask() {
-    const task = { ...this.task };
+    const task = { ...this.task } as TaskModel;
 
     const method = task.id ? 'updateTask' : 'createTask';
     this.taskPromiseService[method](task)
