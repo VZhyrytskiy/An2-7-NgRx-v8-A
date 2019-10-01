@@ -1,4 +1,5 @@
 import { ActionReducer, MetaReducer } from '@ngrx/store';
+import { environment } from 'src/environments/environment';
 
 // console.log all actions and state
 // export is needed for aot compilation
@@ -11,4 +12,6 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   };
 }
 
-export const metaReducers: MetaReducer<any>[] = [debug];
+export const metaReducers: MetaReducer<any>[] = !environment.production
+  ? [debug]
+  : [];

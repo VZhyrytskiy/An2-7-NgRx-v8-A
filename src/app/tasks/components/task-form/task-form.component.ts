@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @NgRx
@@ -7,8 +7,8 @@ import { AppState, selectSelectedTaskByUrl } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
-import { Subscription } from 'rxjs';
-import { AutoUnsubscribe } from './../../../core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { TaskModel, Task } from './../../models/task.model';
 
@@ -16,18 +16,41 @@ import { TaskModel, Task } from './../../models/task.model';
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-@AutoUnsubscribe()
-export class TaskFormComponent implements OnInit {
+export class TaskFormComponent implements OnInit, OnDestroy {
   task: TaskModel;
 
-  private sub: Subscription;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.sub = this.store
-      .pipe(select(selectSelectedTaskByUrl))
-      .subscribe(task => (this.task = { ...task }));
+    const observer = {
+      next: task => {
+        if (task) {
+          this.task = { ...task } as TaskModel;
+        } else {
+          this.task = new TaskModel();
+        }
+      },
+      error(err) {
+        console.log(err);
+      },
+      complete() {
+        console.log('Stream is completed');
+      }
+    };
+
+    this.store
+      .pipe(
+        select(selectSelectedTaskByUrl),
+        takeUntil(this.componentDestroyed$)
+      )
+      .subscribe(observer);
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.complete();
   }
 
   onSaveTask() {
