@@ -81,13 +81,13 @@ export class UsersEffects {
 
   createUpdateUserSuccess$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(UsersActions.createUser, UsersActions.updateUser),
+      ofType(UsersActions.createUserSuccess, UsersActions.updateUserSuccess),
       map(action => {
         const userID = action.user.id;
         const actionType = action.type;
         let path: any[];
 
-        if (actionType === '[Add/Edit User Page] UPDATE_USER') {
+        if (actionType === '[Update User Effect] UPDATE_USER_SUCCESS') {
           path = ['/users', { editedUserID: userID }];
         } else {
           path = ['/users'];
