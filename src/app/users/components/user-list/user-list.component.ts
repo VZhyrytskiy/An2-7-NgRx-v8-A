@@ -36,15 +36,15 @@ export class UserListComponent implements OnInit {
     this.usersError$ = this.store.pipe(select(selectUsersError));
 
     // listen editedUserID from UserFormComponent
-    this.subscription = this.store.pipe(select(selectEditedUser)).subscribe(
-      user => {
+    this.subscription = this.store.pipe(select(selectEditedUser)).subscribe({
+      next: user => {
         this.editedUser = { ...user };
         console.log(
           `Last time you edited user ${JSON.stringify(this.editedUser)}`
         );
       },
-      err => console.log(err)
-    );
+      error: err => console.log(err)
+    });
   }
 
   onEditUser(user: UserModel) {

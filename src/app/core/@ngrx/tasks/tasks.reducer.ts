@@ -17,13 +17,12 @@ const reducer = createReducer(
     return adapter.addAll(tasks, {
       ...state,
       loading: false,
-      loaded: true,
-      selectedTask: null
+      loaded: true
     });
   }),
-  on(TasksActions.getTasksError, (state, props) => {
-    console.log('GET_TASKS_ERROR action being handled!');
-    const error = props.error;
+
+  on(TasksActions.getTasksError, (state, { error }) => {
+    console.log('GET_TASKS/TASK_ERROR action being handled!');
     return {
       ...state,
       loading: false,
@@ -42,15 +41,6 @@ const reducer = createReducer(
     return adapter.addOne(task, state);
   }),
 
-  on(TasksActions.createTaskError, (state, props) => {
-    console.log('CREATE_TASK_ERROR action being handled!');
-    const error = props.error;
-    return {
-      ...state,
-      error
-    };
-  }),
-
   on(TasksActions.updateTask, state => {
     console.log('UPDATE_TASK action being handled!');
     return { ...state };
@@ -58,21 +48,24 @@ const reducer = createReducer(
 
   on(
     TasksActions.updateTaskSuccess,
-    TasksActions.completeTask,
     (state, { task }) => {
       console.log('UPDATE_TASK_SUCCESS action being handled!');
       return adapter.updateOne({ id: task.id, changes: task }, state);
     }
   ),
 
-  on(TasksActions.updateTaskError, (state, props) => {
-    console.log('UPDATE_TASK_ERROR action being handled!');
-    const error = props.error;
-    return {
-      ...state,
-      error
-    };
-  }),
+  on(
+    TasksActions.createTaskError,
+    TasksActions.updateTaskError,
+    TasksActions.deleteTaskError,
+    (state, { error }) => {
+      console.log('CREATE/UPDATE/DELETE_TASK_ERROR action being handled!');
+      return {
+        ...state,
+        error
+      };
+    }
+  ),
 
   on(TasksActions.deleteTask, state => {
     console.log('DELETE_TASK action being handled!');
@@ -82,15 +75,6 @@ const reducer = createReducer(
   on(TasksActions.deleteTaskSuccess, (state, { task }) => {
     console.log('DELETE_TASK_SUCCESS action being handled!');
     return adapter.removeOne(task.id, state);
-  }),
-
-  on(TasksActions.deleteTaskError, (state, props) => {
-    console.log('DELETE_TASK_ERROR action being handled!');
-    const error = props.error;
-    return {
-      ...state,
-      error
-    };
   })
 );
 
