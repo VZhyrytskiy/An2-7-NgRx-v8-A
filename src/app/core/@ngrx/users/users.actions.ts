@@ -4,11 +4,11 @@ import { UserModel, User } from './../../../users/models/user.model';
 
 export const getUsers = createAction('[Users Page (App)] GET_USERS');
 export const getUsersSuccess = createAction(
-  '[Users API] GET_USERS_SUCCEESS',
+  '[Get Users Effect] GET_USERS_SUCCEESS',
   props<{ users: UserModel[] }>()
 );
 export const getUsersError = createAction(
-  '[Users API] GET_USERS_ERROR',
+  '[Get Users Effect] GET_USERS_ERROR',
   props<{ error: Error | string }>()
 );
 
@@ -18,12 +18,12 @@ export const createUser = createAction(
 );
 
 export const createUserSuccess = createAction(
-  '[Users API] CREATE_USER_SUCCESS',
+  '[Create User Effect] CREATE_USER_SUCCESS',
   props<{ user: User }>()
 );
 
 export const createUserError = createAction(
-  '[Users API] CREATE_USER_ERROR',
+  '[Create User Effect] CREATE_USER_ERROR',
   props<{ error: Error | string }>()
 );
 
@@ -33,12 +33,12 @@ export const updateUser = createAction(
 );
 
 export const updateUserSuccess = createAction(
-  '[Users API] UPDATE_USER_SUCCESS',
+  '[Update User Effect] UPDATE_USER_SUCCESS',
   props<{ user: User }>()
 );
 
 export const updateUserError = createAction(
-  '[Users API] UPDATE_USER_ERROR',
+  '[Update User Effect] UPDATE_USER_ERROR',
   props<{ error: Error | string }>()
 );
 
@@ -48,12 +48,12 @@ export const deleteUser = createAction(
 );
 
 export const deleteUserSuccess = createAction(
-  '[Users API] DELETE_USER_SUCCESS',
+  '[Delete User Effect] DELETE_USER_SUCCESS',
   props<{ user: User }>()
 );
 
 export const deleteUserError = createAction(
-  '[Users API] DELETE_USER_ERROR',
+  '[Delete User Effect] DELETE_USER_ERROR',
   props<{ error: Error | string }>()
 );
 
