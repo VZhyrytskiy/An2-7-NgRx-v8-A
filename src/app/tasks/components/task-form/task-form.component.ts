@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 // @NgRx
 import { TasksFacade } from 'src/app/core/@ngrx/tasks/tasks.facade';
 
 // rxjs
-import { Subscription } from 'rxjs';
-import { AutoUnsubscribe } from './../../../core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { TaskModel, Task } from './../../models/task.model';
 
@@ -13,18 +13,40 @@ import { TaskModel, Task } from './../../models/task.model';
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-@AutoUnsubscribe()
-export class TaskFormComponent implements OnInit {
+export class TaskFormComponent implements OnInit, OnDestroy {
   task: TaskModel;
 
-  private sub: Subscription;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private tasksFacade: TasksFacade) {}
 
   ngOnInit(): void {
-    this.sub = this.tasksFacade.selectedTaskByUrl$.subscribe(
-      task => (this.task = { ...task })
-    );
+    const observer = {
+      next: task => {
+        if (task) {
+          this.task = { ...task } as TaskModel;
+        } else {
+          this.task = new TaskModel();
+        }
+      },
+      error(err) {
+        console.log(err);
+      },
+      complete() {
+        console.log('Stream is completed');
+      }
+    };
+
+    this.tasksFacade.selectedTaskByUrl$
+      .pipe(
+        takeUntil(this.componentDestroyed$)
+      )
+      .subscribe(observer);
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.complete();
   }
 
   onSaveTask() {

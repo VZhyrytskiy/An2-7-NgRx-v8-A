@@ -40,6 +40,15 @@ export class TasksEffects implements OnInitEffects /*, OnRunEffects */ {
     this.actions$.pipe(
       ofType(TasksActions.getTasks),
       switchMap(action =>
+        // Notice!
+        // If you have a connection to the Firebase,
+        // the stream will be infinite - you have to unsibscribe
+        // This can be performed following this pattern
+        // this.taskObservableService
+        //      .getTasks()
+        //      .pipe(takeUntil(this.actions$.pipe(ofType(TasksActions.TaskListComponentIsDestroyed))
+        // If you use HttpClient, the stream is finite,
+        // so you have no needs to unsibscribe
         this.taskPromiseService
           .getTasks()
           .then(tasks => TasksActions.getTasksSuccess({ tasks }))

@@ -13,10 +13,10 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.getUsersSuccess, (state, props) => {
-    const users = [...props.users];
+  on(UsersActions.getUsersSuccess, (state, { users }) => {
+    const data = [...users];
 
-    const entities = users.reduce(
+    const entities = data.reduce(
       (result: { [id: number]: User }, user: User) => {
         return {
           ...result,
@@ -36,9 +36,7 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.getUsersError, (state, props) => {
-    const error = props.error;
-
+  on(UsersActions.getUsersError, (state, { error }) => {
     return {
       ...state,
       loading: false,
@@ -47,56 +45,39 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.createUserSuccess, (state, props) => {
-    const createdUser = { ...props.user };
-    const entities = {
-      ...state.entities,
-      [createdUser.id]: createdUser
-    };
-    const originalUser = { ...createdUser };
+  on(
+    UsersActions.createUserSuccess,
+    UsersActions.updateUserSuccess,
+    (state, { user }) => {
+      const createdUpdatedUser = { ...user };
+      const entities = {
+        ...state.entities,
+        [createdUpdatedUser.id]: createdUpdatedUser
+      };
+      const originalUser = { ...createdUpdatedUser };
 
-    return {
-      ...state,
-      entities,
-      originalUser
-    };
-  }),
+      return {
+        ...state,
+        entities,
+        originalUser
+      };
+    }
+  ),
 
-  on(UsersActions.createUserError, (state, props) => {
-    const error = props.error;
+  on(
+    UsersActions.createUserError,
+    UsersActions.updateUserError,
+    UsersActions.deleteUserError,
+    (state, { error }) => {
+      return {
+        ...state,
+        error
+      };
+    }
+  ),
 
-    return {
-      ...state,
-      error
-    };
-  }),
-
-  on(UsersActions.updateUserSuccess, (state, props) => {
-    const updatedUser = { ...props.user };
-    const entities = {
-      ...state.entities,
-      [updatedUser.id]: updatedUser
-    };
-    const originalUser = { ...updatedUser };
-
-    return {
-      ...state,
-      entities,
-      originalUser
-    };
-  }),
-
-  on(UsersActions.updateUserError, (state, props) => {
-    const error = props.error;
-
-    return {
-      ...state,
-      error
-    };
-  }),
-
-  on(UsersActions.deleteUserSuccess, (state, props) => {
-    const { [props.user.id]: removed, ...entities } = state.entities;
+  on(UsersActions.deleteUserSuccess, (state, { user }) => {
+    const { [user.id]: removed, ...entities } = state.entities;
 
     return {
       ...state,
@@ -104,17 +85,8 @@ const reducer = createReducer(
     };
   }),
 
-  on(UsersActions.deleteUserError, (state, props) => {
-    const error = props.error;
-
-    return {
-      ...state,
-      error
-    };
-  }),
-
-  on(UsersActions.setOriginalUser, (state, props) => {
-    const originalUser = { ...props.user };
+  on(UsersActions.setOriginalUser, (state, { user }) => {
+    const originalUser = { ...user };
 
     return {
       ...state,
