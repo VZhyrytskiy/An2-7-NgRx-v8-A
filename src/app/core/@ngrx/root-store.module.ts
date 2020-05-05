@@ -12,11 +12,13 @@ import { TasksStoreModule } from './tasks/tasks-store.module';
     StoreModule.forRoot(
       {},
       {
+        // All checks will automatically be disabled in production builds
         runtimeChecks: {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
-          strictStateSerializability: true,
-          strictActionSerializability: true
+          strictStateImmutability: true,      // default value is true
+          strictActionImmutability: true,     // default value is true
+          strictStateSerializability: true,   // default value is false
+          strictActionSerializability: true,  // default value is false
+          strictActionWithinNgZone: true      // default value is false
         }
       }
     ),
