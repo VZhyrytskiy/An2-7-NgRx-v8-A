@@ -11,11 +11,10 @@ import { AppState, selectSelectedUserByUrl } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 
 import { UserModel } from './../models/user.model';
-import { UsersServicesModule } from '../users-services.module';
 import { SpinnerService } from './../../widgets';
 
 @Injectable({
-  providedIn: UsersServicesModule
+  providedIn: 'any'
 })
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
