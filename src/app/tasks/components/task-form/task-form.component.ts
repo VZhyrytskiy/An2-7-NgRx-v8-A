@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 // @NgRx
 import { Store, select } from '@ngrx/store';
-import { AppState, selectTasksState } from './../../../core/@ngrx';
+import { AppState, selectTasksState, TasksState } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
