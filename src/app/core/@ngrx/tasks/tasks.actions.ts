@@ -14,7 +14,7 @@ export const getTasksError = createAction(
 );
 
 export const createTask = createAction(
-  '[Task List Page] CREATE_TASK',
+  '[Task Form Page] CREATE_TASK',
   props<{ task: Task }>()
 );
 
@@ -29,7 +29,7 @@ export const createTaskError = createAction(
 );
 
 export const updateTask = createAction(
-  '[Task List Page] UPDATE_TASK',
+  '[Task Form Page] UPDATE_TASK',
   props<{ task: Task }>()
 );
 
