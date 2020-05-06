@@ -8,6 +8,8 @@ export class TasksEffects {
 
 
 
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) {
+    console.log('[TASKS EFFECTS]');
+  }
 
 }
