@@ -7,7 +7,7 @@ import { AppState, TasksState } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TaskModel, Task } from './../../models/task.model';
@@ -28,8 +28,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    let observer = {
-      next: tasksState => {
+    let observer: any = {
+      next: (tasksState: TasksState) => {
         if (tasksState.selectedTask) {
           this.task = { ...tasksState.selectedTask } as TaskModel;
         } else {
@@ -52,7 +52,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       .subscribe(observer);
 
     observer = {
-      ...observer,
       next: (params: ParamMap) => {
         const id = params.get('taskID');
         if (id) {
