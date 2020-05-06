@@ -14,6 +14,7 @@ import { metaReducers } from './meta-reducers';
       {},
       {
         metaReducers,
+        // All checks will automatically be disabled in production builds
         runtimeChecks: {
           strictStateImmutability: true,      // default value is true
           strictActionImmutability: true,     // default value is true
