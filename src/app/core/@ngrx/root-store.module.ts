@@ -17,15 +17,17 @@ import { environment } from './../../../environments/environment';
     CommonModule,
     StoreModule.forRoot(routerReducers, {
       metaReducers,
+      // All checks will automatically be disabled in production builds
       runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
+        strictStateImmutability: true,      // default value is true
+        strictActionImmutability: true,     // default value is true
         // router state is not serializable
         // set false if you don't use CustomSerializer
-        strictStateSerializability: true,
+        strictStateSerializability: true,   // default value is false
         // router action is not serializable
         // set false
-        strictActionSerializability: true
+        strictActionSerializability: true,  // default value is false
+        strictActionWithinNgZone: true      // default value is false
       }
     }),
     EffectsModule.forRoot([]),
@@ -39,4 +41,4 @@ import { environment } from './../../../environments/environment';
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ]
 })
-export class RootStoreModule {}
+export class RootStoreModule { }
