@@ -33,7 +33,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.task = new TaskModel();
 
     let observer: any = {
-      next(tasksState: TasksState) {
+      next: (tasksState: TasksState) => {
         this.task = { ...tasksState.selectedTask } as TaskModel;
       },
       error(err) {
@@ -52,7 +52,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       .subscribe(observer);
 
     observer = {
-      next(params: ParamMap) {
+      next: (params: ParamMap) => {
         const id = params.get('taskID');
         if (id) {
           this.store.dispatch(TasksActions.getTask({ taskID: +id }));
