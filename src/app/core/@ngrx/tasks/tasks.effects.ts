@@ -8,7 +8,7 @@ import * as TasksActions from './tasks.actions';
 
 // rxjs
 import { Observable } from 'rxjs';
-import { concatMap, pluck, switchMap, map } from 'rxjs/operators';
+import { concatMap, pluck, switchMap } from 'rxjs/operators';
 
 import { TaskPromiseService } from './../../../tasks/services';
 import { TaskModel, Task } from '../../../tasks/models/task.model';
