@@ -25,7 +25,7 @@ const reducer = createReducer(
   }),
 
   on(TasksActions.getTasksError, (state, { error }) => {
-    console.log('GET_TASKS/TASK_ERROR action being handled!');
+    console.log('GET_TASKS_ERROR action being handled!');
     return {
       ...state,
       loading: false,
