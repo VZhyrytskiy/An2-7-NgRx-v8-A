@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { TasksState } from './tasks.state';
-import { AppState } from '../app.state';
 
 export const selectTasksState = createFeatureSelector<TasksState>('tasks');
 
