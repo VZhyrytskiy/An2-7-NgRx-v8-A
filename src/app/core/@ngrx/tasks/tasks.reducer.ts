@@ -36,7 +36,7 @@ const reducer = createReducer(
       };
     }
   ),
-  
+
   on(TasksActions.getTask, state => {
     console.log('GET_TASK action being handled!');
     return {
