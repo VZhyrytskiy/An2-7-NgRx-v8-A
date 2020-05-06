@@ -34,7 +34,7 @@ import { environment } from './../../../environments/environment';
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
       routerState: RouterState.Minimal
-      // serializer: CustomSerializer
+      // serializer: CustomSerializer // has a priority over routerState
     }),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     TasksStoreModule,
