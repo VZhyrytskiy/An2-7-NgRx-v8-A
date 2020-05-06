@@ -12,11 +12,10 @@ import * as UsersActions from './../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
 import { UserModel } from './../models/user.model';
-import { UsersServicesModule } from '../users-services.module';
 import { SpinnerService } from './../../widgets';
 
 @Injectable({
-  providedIn: UsersServicesModule
+  providedIn: 'any'
 })
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
