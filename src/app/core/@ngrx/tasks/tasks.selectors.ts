@@ -3,7 +3,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { adapter, TasksState } from './tasks.state';
 import { selectRouterState } from './../router';
 import { TaskModel } from './../../../tasks/models/task.model';
-import { TaskListComponent } from 'src/app/tasks';
 
 export const selectTasksState = createFeatureSelector<TasksState>('tasks');
 
