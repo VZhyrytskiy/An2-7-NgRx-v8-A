@@ -9,10 +9,10 @@ import { selectEditedUser } from './../../../core/@ngrx/data/entity-store.module
 
 // rxjs
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { UserModel, User } from './../../models/user.model';
 import { AutoUnsubscribe } from './../../../core/decorators';
-import { map } from 'rxjs/operators';
 
 @Component({
   templateUrl: './user-list.component.html',

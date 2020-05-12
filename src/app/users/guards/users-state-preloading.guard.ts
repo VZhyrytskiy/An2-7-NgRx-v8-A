@@ -5,6 +5,7 @@ import { EntityServices, EntityCollectionService } from '@ngrx/data';
 
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'any'
