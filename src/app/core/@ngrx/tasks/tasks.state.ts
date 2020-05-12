@@ -8,12 +8,12 @@ export interface TasksState extends EntityState<Task> {
   readonly error: Error | string;
 }
 
-export function selectTaskId(task: Task): number {
+function selectTaskId(task: Task): number {
   // In this case this would be optional since primary key is id
   return task.id;
 }
 
-export function sortTasksByAction(task1: Task, task2: Task): number {
+function sortTasksByAction(task1: Task, task2: Task): number {
   return task1.action.localeCompare(task2.action);
 }
 
