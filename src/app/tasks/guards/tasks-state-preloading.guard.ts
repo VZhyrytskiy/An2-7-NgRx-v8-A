@@ -9,11 +9,10 @@ import { AppState } from './../../core/@ngrx';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
-import { TasksServicesModule } from '../tasks-services.module';
 import { checkStore } from './check-store.function';
 
 @Injectable({
-  providedIn: TasksServicesModule
+  providedIn: 'root'
 })
 export class TasksStatePreloadingGuard implements CanActivate {
   constructor(private store: Store<AppState>) {}

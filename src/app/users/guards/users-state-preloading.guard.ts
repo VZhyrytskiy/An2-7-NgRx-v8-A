@@ -8,10 +8,9 @@ import * as UsersActions from './../../core/@ngrx/users/users.actions';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 
-import { UsersServicesModule } from '../users-services.module';
 
 @Injectable({
-  providedIn: UsersServicesModule
+  providedIn: 'any'
 })
 export class UsersStatePreloadingGuard implements CanActivate {
   constructor(private store: Store<AppState>) {}
