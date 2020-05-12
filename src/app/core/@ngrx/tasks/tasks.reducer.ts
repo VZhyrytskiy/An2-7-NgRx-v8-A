@@ -14,7 +14,7 @@ const reducer = createReducer(
   }),
   on(TasksActions.getTasksSuccess, (state, { tasks }) => {
     console.log('GET_TASKS_SUCCESS action being handled!');
-    return adapter.addAll(tasks, {
+    return adapter.setAll(tasks, {
       ...state,
       loading: false,
       loaded: true
@@ -22,7 +22,7 @@ const reducer = createReducer(
   }),
 
   on(TasksActions.getTasksError, (state, { error }) => {
-    console.log('GET_TASKS/TASK_ERROR action being handled!');
+    console.log('GET_TASKS_ERROR action being handled!');
     return {
       ...state,
       loading: false,

@@ -19,22 +19,24 @@ import { UsersStoreModule } from './users/users-store.module';
     CommonModule,
     StoreModule.forRoot(routerReducers, {
       metaReducers,
+      // All checks will automatically be disabled in production builds
       runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
+        strictStateImmutability: true,      // default value is true
+        strictActionImmutability: true,     // default value is true
         // router state is not serializable
         // set false if you don't use CustomSerializer
-        strictStateSerializability: true,
+        strictStateSerializability: true,   // default value is false
         // router action is not serializable
         // set false
-        strictActionSerializability: true
+        strictActionSerializability: true,  // default value is false
+        strictActionWithinNgZone: true      // default value is false
       }
     }),
     EffectsModule.forRoot([RouterEffects]),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
       routerState: RouterState.Minimal,
-      serializer: CustomSerializer
+      serializer: CustomSerializer // has a priority over routerState
     }),
     EntityStoreModule,
     // Instrumentation must be imported after importing StoreModule (config is optional)
@@ -43,4 +45,4 @@ import { UsersStoreModule } from './users/users-store.module';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ]
 })
-export class RootStoreModule {}
+export class RootStoreModule { }
