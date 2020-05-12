@@ -10,11 +10,10 @@ import * as RouterActions from './../../core/@ngrx/router/router.actions';
 import { Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
-import { TasksServicesModule } from '../tasks-services.module';
 import { checkStore } from './check-store.function';
 
 @Injectable({
-  providedIn: TasksServicesModule
+  providedIn: 'root'
 })
 export class TaskExistsGuard implements CanActivate {
   constructor(private store: Store<AppState>) {}
