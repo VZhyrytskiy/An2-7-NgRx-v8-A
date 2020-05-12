@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { TasksState } from './tasks.state';
-import { AppState } from '../app.state';
 import { selectRouterState } from './../router';
 import { TaskModel } from './../../../tasks/models/task.model';
 

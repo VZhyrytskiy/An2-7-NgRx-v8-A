@@ -83,8 +83,7 @@ export class UsersEffects {
     this.actions$.pipe(
       ofType(UsersActions.createUserSuccess, UsersActions.updateUserSuccess),
       map(action => {
-        const userID = action.user.id;
-        const actionType = action.type;
+        const { type: actionType, user: { id: userID } } = action;
         let path: any[];
 
         if (actionType === '[Update User Effect] UPDATE_USER_SUCCESS') {
