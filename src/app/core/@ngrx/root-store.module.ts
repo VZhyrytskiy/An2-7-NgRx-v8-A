@@ -27,7 +27,8 @@ import { environment } from './../../../environments/environment';
         // router action is not serializable
         // set false
         strictActionSerializability: true,  // default value is false
-        strictActionWithinNgZone: true      // default value is false
+        strictActionWithinNgZone: true,      // default value is false
+        strictActionTypeUniqueness: true    // default value is false
       }
     }),
     EffectsModule.forRoot([]),

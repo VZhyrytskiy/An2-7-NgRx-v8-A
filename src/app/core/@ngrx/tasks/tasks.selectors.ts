@@ -1,10 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+import { AppState } from './../app.state';
 import { TasksState } from './tasks.state';
 import { selectRouterState } from './../router';
 import { TaskModel } from './../../../tasks/models/task.model';
 
-export const selectTasksState = createFeatureSelector<TasksState>('tasks');
+export const selectTasksState = createFeatureSelector<AppState, TasksState>('tasks');
 
 export const selectTasksData = createSelector(
   selectTasksState,
@@ -31,3 +32,16 @@ export const selectSelectedTaskByUrl = createSelector(
     }
   }
 );
+
+export const selectTasksDataPartial = createSelector(
+  selectTasksState,
+  (state: TasksState, props: any) => {
+    if (props && props.count) {
+      return state.data.slice(0, props.count);
+    } else {
+      return state.data;
+    }
+
+  }
+);
+
