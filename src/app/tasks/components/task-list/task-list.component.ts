@@ -18,7 +18,7 @@ import { Task, TaskModel } from './../../models/task.model';
 export class TaskListComponent implements OnInit {
   tasksState$: Observable<TasksState>;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit() {
     this.tasksState$ = this.store.pipe(select(selectTasksState));
