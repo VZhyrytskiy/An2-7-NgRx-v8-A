@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 // ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, selectTasksData } from './../../core/@ngrx';
+import { selectTasksData } from './../../core/@ngrx';
 import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
 // rxjs
@@ -16,7 +16,7 @@ import { checkStore } from './check-store.function';
   providedIn: 'root'
 })
 export class TaskExistsGuard implements CanActivate {
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return checkStore(this.store).pipe(

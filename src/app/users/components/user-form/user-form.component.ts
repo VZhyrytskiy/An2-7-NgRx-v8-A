@@ -8,7 +8,6 @@ import { switchMap } from 'rxjs/operators';
 // @Ngrx
 import { Store, select } from '@ngrx/store';
 import {
-  AppState,
   selectUsersOriginalUser,
   selectSelectedUserByUrl
 } from './../../../core/@ngrx';
@@ -34,7 +33,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private dialogService: DialogService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit(): void {

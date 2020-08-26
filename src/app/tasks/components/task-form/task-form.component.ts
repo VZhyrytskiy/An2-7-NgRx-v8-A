@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 // @NgRx
 import { Store, select } from '@ngrx/store';
-import { AppState, selectSelectedTaskByUrl } from './../../../core/@ngrx';
+import { selectSelectedTaskByUrl } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
@@ -21,7 +21,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
 
   private componentDestroyed$: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     const observer: any = {
