@@ -8,7 +8,7 @@ import { pluck, switchMap } from 'rxjs/operators';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, selectUsersOriginalUser } from './../../../core/@ngrx';
+import { selectUsersOriginalUser } from './../../../core/@ngrx';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 
 import { DialogService, CanComponentDeactivate } from './../../../core';
@@ -25,7 +25,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     private location: Location,
     private dialogService: DialogService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit(): void {

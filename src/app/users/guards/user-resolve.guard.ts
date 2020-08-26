@@ -7,7 +7,7 @@ import { delay, map, catchError, finalize, tap, take } from 'rxjs/operators';
 
 // NgRx
 import { Store, select } from '@ngrx/store';
-import { AppState, selectSelectedUserByUrl } from './../../core/@ngrx';
+import { selectSelectedUserByUrl } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 
 import { UserModel } from './../models/user.model';
@@ -18,7 +18,7 @@ import { SpinnerService } from './../../widgets';
 })
 export class UserResolveGuard implements Resolve<UserModel> {
   constructor(
-    private store: Store<AppState>,
+    private store: Store,
     private router: Router,
     private spinner: SpinnerService
   ) {}

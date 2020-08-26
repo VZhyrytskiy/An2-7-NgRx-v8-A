@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import {
-  AppState,
   selectUsers,
   selectUsersError,
   selectEditedUser
@@ -29,7 +28,7 @@ export class UserListComponent implements OnInit {
   private subscription: Subscription;
   private editedUser: UserModel;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit() {
     this.users$ = this.store.pipe(select(selectUsers));

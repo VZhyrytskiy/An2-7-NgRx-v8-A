@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+import { AppState } from '../app.state';
 import { UsersState } from './users.state';
 import { UserModel } from './../../../users/models/user.model';
 import { selectRouterState } from './../router/router.selectors';
@@ -10,7 +11,7 @@ const selectLoaded = (state: UsersState) => state.loaded;
 const selectLoading = (state: UsersState) => state.loading;
 const selectError = (state: UsersState) => state.error;
 
-export const selectUsersState = createFeatureSelector<UsersState>('users');
+export const selectUsersState = createFeatureSelector<AppState, UsersState>('users');
 
 const selectUsersEntitites = createSelector(
   selectUsersState,
