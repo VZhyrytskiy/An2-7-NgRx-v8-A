@@ -22,7 +22,8 @@ import { environment } from './../../../environments/environment';
           strictActionImmutability: true,     // default value is true
           strictStateSerializability: true,   // default value is false
           strictActionSerializability: true,  // default value is false
-          strictActionWithinNgZone: true      // default value is false
+          strictActionWithinNgZone: true,      // default value is false
+          strictActionTypeUniqueness: true    // default value is false
         }
       }
     ),
