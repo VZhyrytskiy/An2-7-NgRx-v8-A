@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState, selectTasksData, selectTasksError } from './../../../core/@ngrx';
+import { selectTasksData, selectTasksError, selectTasksDataPartial } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
 // rxjs
@@ -19,10 +19,11 @@ export class TaskListComponent implements OnInit {
   tasks$: Observable<ReadonlyArray<Task>>;
   tasksError$: Observable<Error | string>;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit() {
     this.tasks$ = this.store.pipe(select(selectTasksData));
+    // this.tasks$ = this.store.pipe(select(selectTasksDataPartial, { count: 2}));
     this.tasksError$ = this.store.pipe(select(selectTasksError));
 
     this.store.dispatch(TasksActions.getTasks());

@@ -5,7 +5,6 @@ import { Router, RouterOutlet, NavigationEnd, NavigationStart } from '@angular/r
 // @ngrx
 import { Store, select } from '@ngrx/store';
 import {
-  AppState,
   selectQueryParams,
   selectRouteParams,
   selectRouteData,
@@ -34,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     public spinnerService: SpinnerService,
     private preloadingStrategy: CustomPreloadingStrategyService,
-    private store: Store<AppState>
+    private store: Store
   ) {}
 
   ngOnInit() {
