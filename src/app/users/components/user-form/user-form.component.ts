@@ -6,7 +6,6 @@ import { Observable, Subscription } from 'rxjs';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState } from './../../../core/@ngrx';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import { selectSelectedUserByUrl } from 'src/app/core/@ngrx/data/entity-store.module';
 
@@ -36,7 +35,7 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private dialogService: DialogService,
-    private store: Store<AppState>,
+    private store: Store,
     entitytServices: EntityServices
   ) {
     // получить сервис для entity User

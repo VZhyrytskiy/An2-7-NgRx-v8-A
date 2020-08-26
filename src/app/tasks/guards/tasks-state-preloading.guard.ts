@@ -3,7 +3,6 @@ import { CanActivate } from '@angular/router';
 
 // ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from './../../core/@ngrx';
 
 // rxjs
 import { Observable, of } from 'rxjs';
@@ -15,7 +14,7 @@ import { checkStore } from './check-store.function';
   providedIn: 'root'
 })
 export class TasksStatePreloadingGuard implements CanActivate {
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   canActivate(): Observable<boolean> {
     return checkStore(this.store).pipe(

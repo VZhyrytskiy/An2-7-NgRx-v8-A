@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // @Ngrx
 import { Store, select } from '@ngrx/store';
-import {
-  AppState,
-  selectTasksData,
-  selectTasksError
-} from './../../../core/@ngrx';
+import { selectTasksData, selectTasksError, selectTasksDataPartial } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
@@ -23,10 +19,11 @@ export class TaskListComponent implements OnInit {
   tasks$: Observable<ReadonlyArray<Task>>;
   tasksError$: Observable<Error | string>;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
     this.tasks$ = this.store.pipe(select(selectTasksData));
+    // this.tasks$ = this.store.pipe(select(selectTasksDataPartial, { count: 2}));
     this.tasksError$ = this.store.pipe(select(selectTasksError));
   }
 
