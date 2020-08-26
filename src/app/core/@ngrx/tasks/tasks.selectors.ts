@@ -1,8 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+import { AppState } from './../app.state';
 import { TasksState } from './tasks.state';
 
-export const selectTasksState = createFeatureSelector<TasksState>('tasks');
+export const selectTasksState = createFeatureSelector<AppState, TasksState>('tasks');
 
 export const selectTasksData = createSelector(
   selectTasksState,
@@ -20,3 +21,16 @@ export const selectTasksLoaded = createSelector(
   selectTasksState,
   (state: TasksState) => state.loaded
 );
+
+export const selectTasksDataPartial = createSelector(
+  selectTasksState,
+  (state: TasksState, props: any) => {
+    if (props && props.count) {
+      return state.data.slice(0, props.count);
+    } else {
+      return state.data;
+    }
+
+  }
+);
+
