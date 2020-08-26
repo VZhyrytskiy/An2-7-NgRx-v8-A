@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 // @ngrx
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../app.state';
 import {
   selectTasksData,
   selectTasksError,
@@ -25,7 +24,7 @@ export class TasksFacade {
   tasksError$: Observable<Error | string>;
   selectedTaskByUrl$: Observable<TaskModel>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store) {
     this.tasks$ = this.store.pipe(select(selectTasksData));
     this.tasksError$ = this.store.pipe(select(selectTasksError));
     this.selectedTaskByUrl$ = this.store.pipe(select(selectSelectedTaskByUrl));

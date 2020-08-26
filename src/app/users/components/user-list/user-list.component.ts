@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { EntityServices, EntityCollectionService } from '@ngrx/data';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
-import { AppState } from './../../../core/@ngrx';
 import { selectEditedUser } from './../../../core/@ngrx/data/entity-store.module';
 
 // rxjs
@@ -25,10 +24,9 @@ export class UserListComponent implements OnInit {
 
   private subscription: Subscription;
   private editedUser: UserModel;
-
   private userService: EntityCollectionService<User>;
 
-  constructor(private store: Store<AppState>, entitytServices: EntityServices) {
+  constructor(private store: Store, entitytServices: EntityServices) {
     // получить сервис для entity User
     this.userService = entitytServices.getEntityCollectionService('User');
   }

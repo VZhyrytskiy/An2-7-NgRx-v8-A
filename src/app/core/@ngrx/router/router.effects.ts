@@ -19,11 +19,8 @@ export class RouterEffects {
     () =>
       this.actions$.pipe(
         ofType(RouterActions.go),
-        map(action => {
+        tap(action => {
           const { type: deleted, path, queryParams, extras } = { ...action };
-          return { path, queryParams, extras };
-        }),
-        tap(({ path, queryParams, extras }) => {
           this.router.navigate(path, { queryParams, ...extras });
         })
       ),

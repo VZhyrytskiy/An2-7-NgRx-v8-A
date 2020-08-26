@@ -1,4 +1,4 @@
-import { Params } from '@angular/router';
+import { Params, Data } from '@angular/router';
 import { RouterReducerState } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
@@ -6,6 +6,7 @@ export interface RouterStateUrl {
   queryParams: Params;
   params: Params;
   fragment: string;
+  data: Data;
 }
 
 export interface RouterState {
