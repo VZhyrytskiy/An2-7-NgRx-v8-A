@@ -20,7 +20,8 @@ import { metaReducers } from './meta-reducers';
           strictActionImmutability: true,     // default value is true
           strictStateSerializability: true,   // default value is false
           strictActionSerializability: true,  // default value is false
-          strictActionWithinNgZone: true      // default value is false
+          strictActionWithinNgZone: true,      // default value is false
+          strictActionTypeUniqueness: true    // default value is false
         }
       }
     ),
