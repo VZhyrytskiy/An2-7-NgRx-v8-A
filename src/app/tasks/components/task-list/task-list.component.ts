@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectTasksData, selectTasksError, selectTasksDataPartial } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 
@@ -22,9 +22,10 @@ export class TaskListComponent implements OnInit {
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit() {
-    this.tasks$ = this.store.pipe(select(selectTasksData));
-    // this.tasks$ = this.store.pipe(select(selectTasksDataPartial, { count: 2}));
-    this.tasksError$ = this.store.pipe(select(selectTasksError));
+    console.log('We have a store! ', this.store);
+    this.tasks$ = this.store.select(selectTasksData);
+    // this.tasks$ = this.store.select(selectTasksDataPartial, { count: 2});
+    this.tasksError$ = this.store.select(selectTasksError);
 
     this.store.dispatch(TasksActions.getTasks());
   }
