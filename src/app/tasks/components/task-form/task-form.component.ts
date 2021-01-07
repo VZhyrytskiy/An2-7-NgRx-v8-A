@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 // @NgRx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectSelectedTaskByUrl } from './../../../core/@ngrx';
 import * as TasksActions from './../../../core/@ngrx/tasks/tasks.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
@@ -36,9 +36,8 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.store
+    this.store.select(selectSelectedTaskByUrl)
       .pipe(
-        select(selectSelectedTaskByUrl),
         takeUntil(this.componentDestroyed$)
       )
       .subscribe(observer);
