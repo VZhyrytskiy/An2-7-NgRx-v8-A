@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // @NgRx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { EntityServices, EntityCollectionService } from '@ngrx/data';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import { selectEditedUser } from './../../../core/@ngrx/data/entity-store.module';
@@ -42,8 +42,8 @@ export class UserListComponent implements OnInit {
     );
 
     // listen editedUserID from UserFormComponent
-    this.subscription = this.store.pipe(select(selectEditedUser)).subscribe({
-      next: user => {
+    this.subscription = this.store.select(selectEditedUser).subscribe({
+      next: (user: UserModel) => {
         this.editedUser = { ...user };
         console.log(
           `Last time you edited user ${JSON.stringify(this.editedUser)}`

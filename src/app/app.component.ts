@@ -44,10 +44,10 @@ export class AppComponent implements OnInit, OnDestroy {
     // );
     // this.setPageTitles();
     // Router Selectors Demo
-    // const url$ = this.store.pipe(select(selectUrl));
-    // const queryParams$ = this.store.pipe(select(selectQueryParams));
-    // const routeParams$ = this.store.pipe(select(selectRouteParams));
-    // const routeData$ = this.store.pipe(select(selectRouteData));
+    // const url$ = this.store.select(selectUrl);
+    // const queryParams$ = this.store.select(selectQueryParams);
+    // const routeParams$ = this.store.select(selectRouteParams);
+    // const routeData$ = this.store.select(selectRouteData);
     // const source$ = merge(url$, queryParams$, routeParams$, routeData$);
     // source$.pipe(tap(val => console.log(val))).subscribe();
     this.setMessageServiceOnRefresh();
