@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectUsersLoaded } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 
@@ -23,9 +23,8 @@ export class UsersStatePreloadingGuard implements CanActivate {
   }
 
   private checkStore(): Observable<boolean> {
-    return this.store.pipe(
-      select(selectUsersLoaded),
-      tap(loaded => {
+    return this.store.select(selectUsersLoaded).pipe(
+      tap((loaded: boolean) => {
         if (!loaded) {
           this.store.dispatch(UsersActions.getUsers());
         }
