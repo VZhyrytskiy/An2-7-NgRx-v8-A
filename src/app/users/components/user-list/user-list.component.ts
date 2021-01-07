@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // @NgRx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import {
@@ -31,13 +31,13 @@ export class UserListComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit() {
-    this.users$ = this.store.pipe(select(selectUsers));
-    this.usersError$ = this.store.pipe(select(selectUsersError));
+    this.users$ = this.store.select(selectUsers);
+    this.usersError$ = this.store.select(selectUsersError);
     this.store.dispatch(UsersActions.getUsers());
 
     // listen editedUserID from UserFormComponent
-    this.subscription = this.store.pipe(select(selectEditedUser)).subscribe({
-      next: user => {
+    this.subscription = this.store.select(selectEditedUser).subscribe({
+      next: (user: UserModel) => {
         this.editedUser = { ...user };
         console.log(
           `Last time you edited user ${JSON.stringify(this.editedUser)}`
