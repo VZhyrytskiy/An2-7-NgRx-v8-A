@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 // ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectTasksData } from './../../core/@ngrx';
 import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
 import { checkStore } from './check-store.function';
+import { TaskModel } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,10 @@ export class TaskExistsGuard implements CanActivate {
   }
 
   private hasTask(id: number): Observable<boolean> {
-    return this.store.pipe(
-      select(selectTasksData),
+    return this.store.select(selectTasksData).pipe(
 
       // check if task with id exists
-      map(tasks => !!tasks.find(task => task.id === id)),
+      map((tasks: TaskModel[]) => !!tasks.find(task => task.id === id)),
 
       // make a side effect
       tap(result => {

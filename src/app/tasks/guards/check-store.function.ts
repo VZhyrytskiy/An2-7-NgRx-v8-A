@@ -1,4 +1,4 @@
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectTasksLoaded } from './../../core/@ngrx';
 import * as TasksActions from './../../core/@ngrx/tasks/tasks.actions';
 
@@ -6,9 +6,7 @@ import { Observable } from 'rxjs';
 import { tap, filter, take } from 'rxjs/operators';
 
 export function checkStore(store: Store): Observable<boolean> {
-  return store.pipe(
-    select(selectTasksLoaded),
-
+  return store.select(selectTasksLoaded).pipe(
     // make a side effect
     tap((loaded: boolean) => {
       if (!loaded) {
