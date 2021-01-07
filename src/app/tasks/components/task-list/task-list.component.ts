@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // @Ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState, TasksState } from './../../../core/@ngrx';
 
 // rxjs
