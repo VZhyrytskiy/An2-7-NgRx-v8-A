@@ -28,7 +28,7 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     console.log('We have a store! ', this.store);
-    this.tasksState$ = this.store.pipe(select('tasks'));
+    this.tasksState$ = this.store.select('tasks');
   }
 
   onCreateTask() {
