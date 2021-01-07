@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 // @ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
   selectTasksData,
   selectTasksError,
@@ -25,9 +25,9 @@ export class TasksFacade {
   selectedTaskByUrl$: Observable<TaskModel>;
 
   constructor(private store: Store) {
-    this.tasks$ = this.store.pipe(select(selectTasksData));
-    this.tasksError$ = this.store.pipe(select(selectTasksError));
-    this.selectedTaskByUrl$ = this.store.pipe(select(selectSelectedTaskByUrl));
+    this.tasks$ = this.store.select(selectTasksData);
+    this.tasksError$ = this.store.select(selectTasksError);
+    this.selectedTaskByUrl$ = this.store.select(selectSelectedTaskByUrl);
   }
 
   createTask(props: { task: Task }) {
