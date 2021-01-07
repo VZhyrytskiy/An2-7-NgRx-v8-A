@@ -74,7 +74,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onDeactivate($event: any, routerOutlet: RouterOutlet) {
-    // console.log('Deactivated Component', $event, routerOutlet);
+    console.log('Deactivated Component', $event, routerOutlet);
   }
 
   private setPageTitles() {
