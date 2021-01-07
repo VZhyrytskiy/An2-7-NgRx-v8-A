@@ -5,7 +5,7 @@ import { UrlTree } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 // @Ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 import { selectSelectedUserByUrl } from 'src/app/core/@ngrx/data/entity-store.module';
 
@@ -44,8 +44,8 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
 
   ngOnInit(): void {
     this.sub = this.store
-      .pipe(select(selectSelectedUserByUrl))
-      .subscribe(user => (this.user = { ...user }));
+      .select(selectSelectedUserByUrl)
+      .subscribe((user: UserModel) => (this.user = { ...user }));
   }
 
   onSaveUser() {
