@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 import { pluck, switchMap } from 'rxjs/operators';
 
 // @Ngrx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectUsersOriginalUser } from './../../../core/@ngrx';
 import * as UsersActions from './../../../core/@ngrx/users/users.actions';
 
@@ -57,9 +57,8 @@ export class UserFormComponent implements OnInit, CanComponentDeactivate {
     | UrlTree {
     const flags = [];
 
-    return this.store.pipe(
-      select(selectUsersOriginalUser),
-      switchMap(originalUser => {
+    return this.store.select(selectUsersOriginalUser).pipe(
+      switchMap((originalUser: UserModel) => {
         for (const key in originalUser) {
           if (originalUser[key] === this.user[key]) {
             flags.push(true);

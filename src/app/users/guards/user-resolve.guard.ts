@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { delay, map, catchError, finalize, tap, take } from 'rxjs/operators';
 
 // NgRx
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectSelectedUserByUrl } from './../../core/@ngrx';
 import * as UsersActions from './../../core/@ngrx/users/users.actions';
 
@@ -27,8 +27,7 @@ export class UserResolveGuard implements Resolve<UserModel> {
     console.log('UserResolve Guard is called');
     this.spinner.show();
 
-    return this.store.pipe(
-      select(selectSelectedUserByUrl),
+    return this.store.select(selectSelectedUserByUrl).pipe(
       tap(user => this.store.dispatch(UsersActions.setOriginalUser({ user }))),
       delay(2000),
       map((user: UserModel) => {
